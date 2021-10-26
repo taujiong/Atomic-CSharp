@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Atomic.UnifiedAuth.Data;
+using Atomic.UnifiedAuth.Models;
 using Localization.SqlLocalizer.DbStringLocalizer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +29,8 @@ namespace Atomic.UnifiedAuth
         {
             AddSqlLocalization(services);
 
+            AddAuthentication(services);
+
             services.AddRazorPages()
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization();
@@ -44,6 +49,8 @@ namespace Atomic.UnifiedAuth
 
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
@@ -85,6 +92,32 @@ namespace Atomic.UnifiedAuth
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
+        }
+
+        private void AddAuthentication(IServiceCollection services)
+        {
+            services.AddDbContext<AppDbContext>(options =>
+            {
+                var connectionString = Configuration.GetConnectionString("Identity");
+                options.UseNpgsql(connectionString, builder =>
+                {
+                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                });
+            });
+
+            services.AddIdentity<AppUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppDbContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddAuthentication()
+                .AddGitHub(options =>
+                {
+                    options.SignInScheme = IdentityConstants.ExternalScheme;
+                    options.ClientId = Configuration["ExternalIdentityProviders:GitHub:ClientId"];
+                    options.ClientSecret = Configuration["ExternalIdentityProviders:GitHub:ClientSecret"];
+                });
+
+            services.Configure<AccountOptions>(Configuration.GetSection("Account"));
         }
     }
 }
