@@ -6,6 +6,7 @@
 }
 
 @{
+  ViewData["Title"] = _localizer["Welcome"];
   var isAuthenticated = User.Identity is {IsAuthenticated: true };
   var userName = User.Identity?.Name;
 }

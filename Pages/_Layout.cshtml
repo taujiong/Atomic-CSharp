@@ -2,6 +2,10 @@
 @{
   Layout = null;
 
+  var title = "Atomic Unified Auth Platform";
+  if (ViewData["Title"] != null)
+    title = ViewData["Title"] + " - AUAP";
+
   var culture = CultureInfo.CurrentCulture.Name;
   if (string.IsNullOrEmpty(culture)) culture = "en-US";
 }
@@ -15,7 +19,7 @@
         name="viewport">
   @await Html.PartialAsync("./_Favicons")
 
-  <title>Atomic Unified Auth Platform</title>
+  <title>@title</title>
 
   <link href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.1/css/bulma.min.css" rel="stylesheet">
   @await RenderSectionAsync("Head", false)

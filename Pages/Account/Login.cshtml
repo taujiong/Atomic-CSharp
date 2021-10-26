@@ -1,4 +1,97 @@
 ﻿@page
 @model Atomic.UnifiedAuth.Pages.Account.Login
 
-<h1>Login Page</h1>
+@{
+  ViewData["Title"] = _localizer["Login"];
+}
+
+<div class="box">
+  <div class="has-text-centered is-size-1 mb-3">@_localizer["Login"]</div>
+
+  <form method="post">
+    <div class="field">
+      <div class="wrap-input">
+        <svg aria-hidden="true"
+             class="icon">
+          <use xlink:href="#icon-user"></use>
+        </svg>
+        <input asp-for="Input.UsernameOrEmailAddress"
+               autocomplete="on"
+               class="input is-shadowless"
+               placeholder="@_localizer["UserNameOrEmailAddress"]"
+               required>
+        <span class="focus-input"></span>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="wrap-input">
+        <svg aria-hidden="true"
+             class="icon">
+          <use xlink:href="#icon-lock"></use>
+        </svg>
+        <input asp-for="Input.Password"
+               class="input is-shadowless"
+               placeholder="@_localizer["Password"]"
+               required>
+        <span class="focus-input"></span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label asp-for="Input.RememberMe">
+        <input asp-for="Input.RememberMe" type="checkbox" />
+        <span>@_localizer["RememberMe"]</span>
+      </label>
+    </div>
+
+    <div class="mb-4 pt-4">
+      <div class="wrap-form-btn">
+        <div class="form-btn-bg"></div>
+        <button class="form-btn" type="submit">
+          @_localizer["Login"]
+        </button>
+      </div>
+    </div>
+  </form>
+
+  @if (Model.ExternalLogins.Any())
+  {
+    <div class="has-text-centered my-5">
+      <span>@_localizer["UseAnotherServiceToLogin"]</span>
+    </div>
+
+    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+      <div class="columns is-centered is-mobile">
+        @foreach (var provider in Model.ExternalLogins)
+        {
+          <button type="submit" class="login-social-item mx-1"
+                  name="provider" value="@provider.Name">
+            <svg aria-hidden="true"
+                 class="icon">
+              <use xlink:href="#icon-@provider.DisplayName?.ToLower()"></use>
+            </svg>
+          </button>
+        }
+      </div>
+    </form>
+  }
+
+  <div class="has-text-centered">
+    <a asp-page="./Register"
+       asp-route-returnUrl="@Model.ReturnUrl"
+       class="is-size-6 mx-1">
+      @_localizer["Register"]
+    </a>
+    <a asp-page-handler="Cancel"
+       asp-route-returnUrl="@Model.ReturnUrl"
+       class="is-size-6 mx-1">
+      @_localizer["Cancel"]
+    </a>
+    <a asp-page="./ForgotPassword"
+       asp-route-returnUrl="@Model.ReturnUrl"
+       class="is-size-6 mx-1">
+      @_localizer["ForgotPassword"]
+    </a>
+  </div>
+</div>
