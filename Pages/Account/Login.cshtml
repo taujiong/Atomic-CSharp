@@ -1,4 +1,5 @@
 ﻿@page
+@using Atomic.UnifiedAuth.Models
 @model Atomic.UnifiedAuth.Pages.Account.Login
 
 @{
@@ -8,74 +9,52 @@
 <div class="box">
   <div class="has-text-centered is-size-1 mb-3">@_localizer["Login"]</div>
 
+  @await Html.PartialAsync("Shared/_ValidationSummary", ModelState)
   <form method="post">
     <div class="field">
-      <div class="wrap-input">
-        <svg aria-hidden="true"
-             class="icon">
-          <use xlink:href="#icon-user"></use>
-        </svg>
-        <input asp-for="Input.UsernameOrEmailAddress"
-               autocomplete="on"
-               class="input is-shadowless"
-               placeholder="@_localizer["UserNameOrEmailAddress"]"
-               required>
-        <span class="focus-input"></span>
+      <label asp-for="Input.UsernameOrEmailAddress" class="label"></label>
+      <div class="control has-icons-left">
+        <input asp-for="Input.UsernameOrEmailAddress" class="input">
+        <span class="icon is-small is-left">
+          <svg aria-hidden="true" class="iconfont">
+            <use xlink:href="#icon-user"></use>
+          </svg>
+        </span>
       </div>
+      <span asp-validation-for="Input.UsernameOrEmailAddress" class="help is-danger"></span>
     </div>
 
     <div class="field">
-      <div class="wrap-input">
-        <svg aria-hidden="true"
-             class="icon">
-          <use xlink:href="#icon-lock"></use>
-        </svg>
-        <input asp-for="Input.Password"
-               class="input is-shadowless"
-               placeholder="@_localizer["Password"]"
-               required>
-        <span class="focus-input"></span>
+      <label asp-for="Input.Password" class="label"></label>
+      <div class="control has-icons-left">
+        <input asp-for="Input.Password" class="input">
+        <span class="icon is-small is-left">
+          <svg aria-hidden="true" class="iconfont">
+            <use xlink:href="#icon-lock"></use>
+          </svg>
+        </span>
       </div>
+      <span asp-validation-for="Input.Password" class="help is-danger"></span>
     </div>
 
     <div class="field">
-      <label asp-for="Input.RememberMe">
+      <label asp-for="Input.RememberMe" class="checkbox">
         <input asp-for="Input.RememberMe" type="checkbox" />
-        <span>@_localizer["RememberMe"]</span>
+        <span>@_localizer["Remember me"]</span>
       </label>
     </div>
 
-    <div class="mb-4 pt-4">
-      <div class="wrap-form-btn">
-        <div class="form-btn-bg"></div>
-        <button class="form-btn" type="submit">
-          @_localizer["Login"]
-        </button>
-      </div>
-    </div>
+    <button class="button is-primary is-rounded is-fullwidth">
+      @_localizer["Login"]
+    </button>
   </form>
 
-  @if (Model.ExternalLogins.Any())
+  @await Html.PartialAsync("Shared/_ExternalLogin", new ExternalLoginPartialModel
   {
-    <div class="has-text-centered my-5">
-      <span>@_localizer["UseAnotherServiceToLogin"]</span>
-    </div>
-
-    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-      <div class="columns is-centered is-mobile">
-        @foreach (var provider in Model.ExternalLogins)
-        {
-          <button type="submit" class="login-social-item mx-1"
-                  name="provider" value="@provider.Name">
-            <svg aria-hidden="true"
-                 class="icon">
-              <use xlink:href="#icon-@provider.DisplayName?.ToLower()"></use>
-            </svg>
-          </button>
-        }
-      </div>
-    </form>
-  }
+    ExternalLogins = Model.ExternalLogins,
+    Action = "login",
+    ReturnUrl = Model.ReturnUrl
+  })
 
   <div class="has-text-centered">
     <a asp-page="./Register"
@@ -91,7 +70,7 @@
     <a asp-page="./ForgotPassword"
        asp-route-returnUrl="@Model.ReturnUrl"
        class="is-size-6 mx-1">
-      @_localizer["ForgotPassword"]
+      @_localizer["Forgot password"]
     </a>
   </div>
 </div>

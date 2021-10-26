@@ -59,6 +59,8 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (ModelState.IsValid)
             {
+                await ReplaceEmailToUsernameOfInputIfNeeds();
+
                 var result = await _signInManager.PasswordSignInAsync(
                     Input.UsernameOrEmailAddress,
                     Input.Password,
@@ -67,18 +69,19 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User logged in.");
+                    _logger.LogInformation("User {UserName} logged in", Input.UsernameOrEmailAddress);
                     return Redirect(returnUrl);
                 }
 
                 if (result.IsLockedOut)
                 {
-                    var message = _localizer["The user is locked out"];
-                    ModelState.AddModelError(string.Empty, message);
+                    _logger.LogInformation("User {UserName} is locked in", Input.UsernameOrEmailAddress);
+                    var message = _localizer["The user is locked out, re-try in 5 minutes"];
+                    ModelState.AddModelError("Login", message);
                     return Page();
                 }
 
-                ModelState.AddModelError(string.Empty, "Invalid login attempt");
+                ModelState.AddModelError("Login", _localizer["Your credential is invalid"]);
                 return Page();
             }
 
@@ -91,6 +94,17 @@ namespace Atomic.UnifiedAuth.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             return Redirect(returnUrl);
+        }
+
+        private async Task ReplaceEmailToUsernameOfInputIfNeeds()
+        {
+            var userByUsername = await _userManager.FindByNameAsync(Input.UsernameOrEmailAddress);
+            if (userByUsername != null) return;
+
+            var userByEmail = await _userManager.FindByEmailAsync(Input.UsernameOrEmailAddress);
+            if (userByEmail == null) return;
+
+            Input.UsernameOrEmailAddress = userByEmail.UserName;
         }
     }
 }

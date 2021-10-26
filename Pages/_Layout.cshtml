@@ -2,9 +2,9 @@
 @{
   Layout = null;
 
-  var title = "Atomic Unified Auth Platform";
+  var title = _localizer["Atomic Unified Auth Platform"].Value;
   if (ViewData["Title"] != null)
-    title = ViewData["Title"] + " - AUAP";
+    title = ViewData["Title"] + " - " + title;
 
   var culture = CultureInfo.CurrentCulture.Name;
   if (string.IsNullOrEmpty(culture)) culture = "en-US";

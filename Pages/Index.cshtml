@@ -13,9 +13,7 @@
 
 <section class="hero is-fullheight">
   <div class="video-container">
-    <video autoplay
-           loop
-           muted
+    <video autoplay loop muted
            src="https://6a33-j3space-1712dd-1258451814.tcb.qcloud.la/night-cut.mp4?sign=416c78f4f6db31521b19220d6b7e558f&t=1603554273">
     </video>
   </div>
@@ -23,9 +21,7 @@
   <div class="hero-body">
     <div class="container has-text-centered">
       <div>
-        <time class="has-text-grey-lighter is-size-1"
-              id="time">
-        </time>
+        <time class="has-text-grey-lighter is-size-1" id="time"></time>
       </div>
 
       @if (!isAuthenticated)
@@ -37,7 +33,7 @@
       else
       {
         <h1 class="has-text-grey-lighter is-size-4">
-          @_localizer["HomePageGreeting"], @userName
+          @_localizer["Welcome"], @userName
         </h1>
 
         <a asp-page="/Account/Logout" class="button is-light mt-2">

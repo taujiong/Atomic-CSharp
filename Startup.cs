@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Atomic.UnifiedAuth.Data;
+using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using Localization.SqlLocalizer.DbStringLocalizer;
 using Microsoft.AspNetCore.Builder;
@@ -33,7 +34,11 @@ namespace Atomic.UnifiedAuth
 
             services.AddRazorPages()
                 .AddViewLocalization()
-                .AddDataAnnotationsLocalization();
+                .AddDataAnnotationsLocalization(options =>
+                {
+                    options.DataAnnotationLocalizerProvider = (_, factory) =>
+                        factory.Create(typeof(AccountResource));
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -76,7 +81,9 @@ namespace Atomic.UnifiedAuth
             services.AddSqlLocalization(options =>
             {
                 options.UseTypeFullNames = true;
-                options.CreateNewRecordWhenLocalisedStringDoesNotExist = true;
+                options.ReturnOnlyKeyIfNotFound = true;
+                options.UseOnlyPropertyNames = false;
+                options.CreateNewRecordWhenLocalisedStringDoesNotExist = false;
             });
 
             services.Configure<RequestLocalizationOptions>(options =>
@@ -116,8 +123,6 @@ namespace Atomic.UnifiedAuth
                     options.ClientId = Configuration["ExternalIdentityProviders:GitHub:ClientId"];
                     options.ClientSecret = Configuration["ExternalIdentityProviders:GitHub:ClientSecret"];
                 });
-
-            services.Configure<AccountOptions>(Configuration.GetSection("Account"));
         }
     }
 }

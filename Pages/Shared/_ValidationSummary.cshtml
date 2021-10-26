@@ -1,0 +1,9 @@
+@model Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary
+
+@if (!Model.IsValid)
+{
+  <div class="message is-danger">
+    <div class="message-header">Failed</div>
+    <div asp-validation-summary="ModelOnly" class="message-body content"></div>
+  </div>
+}
