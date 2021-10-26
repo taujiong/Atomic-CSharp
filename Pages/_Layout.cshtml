@@ -1,0 +1,22 @@
+﻿@using System.Globalization
+@{
+  Layout = null;
+
+  var culture = CultureInfo.CurrentCulture.Name;
+  if (string.IsNullOrEmpty(culture)) culture = "en-US";
+}
+
+<!DOCTYPE html>
+
+<html lang="@culture">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        name="viewport">
+
+  <title>Atomic Unified Auth Platform</title>
+</head>
+<body>
+@RenderBody()
+</body>
+</html>
