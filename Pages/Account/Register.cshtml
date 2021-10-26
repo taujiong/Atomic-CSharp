@@ -71,7 +71,7 @@
 
   @await Html.PartialAsync("Shared/_ExternalLogin", new ExternalLoginPartialModel
   {
-    ExternalLogins = Model.ExternalLogins,
+    ExternalSchemes = Model.ExternalSchemes,
     Action = "register",
     ReturnUrl = Model.ReturnUrl
   })

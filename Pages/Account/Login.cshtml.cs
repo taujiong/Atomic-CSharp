@@ -35,7 +35,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
         [BindProperty]
         public LoginInputModel Input { get; set; }
 
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public IList<AuthenticationScheme> ExternalSchemes { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -46,7 +46,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalSchemes = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             ReturnUrl = returnUrl;
         }
@@ -55,7 +55,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
         {
             returnUrl ??= Url.Content("~/");
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalSchemes = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             if (ModelState.IsValid)
             {

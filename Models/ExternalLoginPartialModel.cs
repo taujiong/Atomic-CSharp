@@ -5,7 +5,7 @@ namespace Atomic.UnifiedAuth.Models
 {
     public class ExternalLoginPartialModel
     {
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
+        public IList<AuthenticationScheme> ExternalSchemes { get; set; }
 
         public string Action { get; set; }
 

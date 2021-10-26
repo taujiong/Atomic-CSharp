@@ -1,6 +1,6 @@
 @model Atomic.UnifiedAuth.Models.ExternalLoginPartialModel
 
-  @if (Model.ExternalLogins.Any())
+  @if (Model.ExternalSchemes.Any())
   {
     <div class="has-text-centered my-5">
       <span>@_localizer[$"Use another service to {Model.Action}"]</span>
@@ -8,12 +8,12 @@
 
     <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
       <div class="columns is-centered is-mobile">
-        @foreach (var provider in Model.ExternalLogins)
+        @foreach (var scheme in Model.ExternalSchemes)
         {
           <button type="submit" class="social-button"
-                  name="provider" value="@provider.Name">
+                  name="scheme" value="@scheme.Name">
             <svg class="iconfont">
-              <use xlink:href="#icon-@provider.DisplayName?.ToLower()"></use>
+              <use xlink:href="#icon-@scheme.DisplayName?.ToLower()"></use>
             </svg>
           </button>
         }
