@@ -16,6 +16,9 @@
   @await Html.PartialAsync("./_Favicons")
 
   <title>Atomic Unified Auth Platform</title>
+
+  <link href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.1/css/bulma.min.css" rel="stylesheet">
+  @await RenderSectionAsync("Head", false)
 </head>
 <body>
 @RenderBody()
