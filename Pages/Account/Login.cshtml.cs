@@ -54,38 +54,32 @@ namespace Atomic.UnifiedAuth.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-
             ExternalSchemes = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            if (!ModelState.IsValid) return Page();
 
-            if (ModelState.IsValid)
+            await ReplaceEmailToUsernameOfInputIfNeeds();
+            var result = await _signInManager.PasswordSignInAsync(
+                Input.UsernameOrEmailAddress,
+                Input.Password,
+                Input.RememberMe,
+                true);
+
+            if (result.Succeeded)
             {
-                await ReplaceEmailToUsernameOfInputIfNeeds();
+                _logger.LogInformation("User {UserName} logged in", Input.UsernameOrEmailAddress);
+                return Redirect(returnUrl);
+            }
 
-                var result = await _signInManager.PasswordSignInAsync(
-                    Input.UsernameOrEmailAddress,
-                    Input.Password,
-                    Input.RememberMe,
-                    true);
-
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User {UserName} logged in", Input.UsernameOrEmailAddress);
-                    return Redirect(returnUrl);
-                }
-
-                if (result.IsLockedOut)
-                {
-                    _logger.LogInformation("User {UserName} is locked in", Input.UsernameOrEmailAddress);
-                    var message = _localizer["The user is locked out, re-try in 5 minutes"];
-                    ModelState.AddModelError("Login", message);
-                    return Page();
-                }
-
-                ModelState.AddModelError("Login", _localizer["Your credential is invalid"]);
+            if (result.IsLockedOut)
+            {
+                _logger.LogInformation("User {UserName} is locked in", Input.UsernameOrEmailAddress);
+                var message = _localizer["The user is locked out, re-try in 5 minutes"];
+                ModelState.AddModelError("Login", message);
                 return Page();
             }
 
-            // If we got this far, something failed, redisplay form
+            ModelState.AddModelError("Login", _localizer["Your credential is invalid"]);
+
             return Page();
         }
 
