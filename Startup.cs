@@ -4,7 +4,6 @@ using System.Globalization;
 using Atomic.UnifiedAuth.Data;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
-using Localization.SqlLocalizer.DbStringLocalizer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -28,7 +27,7 @@ namespace Atomic.UnifiedAuth
 
         public void ConfigureServices(IServiceCollection services)
         {
-            AddSqlLocalization(services);
+            AddLocalization(services);
 
             AddAuthentication(services);
 
@@ -63,28 +62,9 @@ namespace Atomic.UnifiedAuth
             });
         }
 
-        /// <summary>
-        /// 添加基于数据库的本地化
-        /// 此方法必须在 AddViewLocalization 之前执行，否则会注入默认的 ResourceManagerStringLocalizer
-        /// </summary>
-        private void AddSqlLocalization(IServiceCollection services)
+        private static void AddLocalization(IServiceCollection services)
         {
-            services.AddDbContext<LocalizationModelContext>(options =>
-            {
-                var connectionString = Configuration.GetConnectionString("Localization");
-                options.UseNpgsql(connectionString, builder =>
-                {
-                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
-                });
-            }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
-
-            services.AddSqlLocalization(options =>
-            {
-                options.UseTypeFullNames = true;
-                options.ReturnOnlyKeyIfNotFound = true;
-                options.UseOnlyPropertyNames = false;
-                options.CreateNewRecordWhenLocalisedStringDoesNotExist = false;
-            });
+            services.AddLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
             {

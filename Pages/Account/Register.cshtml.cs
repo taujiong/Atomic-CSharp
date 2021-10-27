@@ -73,7 +73,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
                     {
                         const string message = "Error loading external login information";
                         _logger.LogWarning(message);
-                        ModelState.AddModelError(nameof(ExternalLogin), _localizer[message]);
+                        ModelState.AddModelError(string.Empty, _localizer[message]);
 
                         return Page();
                     }
@@ -96,7 +96,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(nameof(Register), error.Description);
+                ModelState.AddModelError(string.Empty, error.Description);
             }
 
             return Page();

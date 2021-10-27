@@ -10,6 +10,7 @@
   <div class="has-text-centered is-size-1 mb-3">@_localizer["Login"]</div>
 
   @await Html.PartialAsync("Shared/_ValidationSummary", ModelState)
+
   <form method="post">
     <div class="field">
       <label asp-for="Input.UsernameOrEmailAddress" class="label"></label>
