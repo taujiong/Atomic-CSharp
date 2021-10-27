@@ -73,18 +73,13 @@ namespace Atomic.UnifiedAuth.Pages.Account
                     {
                         const string message = "Error loading external login information";
                         _logger.LogWarning(message);
-                        ModelState.AddModelError("ExternalLogin", _localizer[message]);
+                        ModelState.AddModelError(nameof(ExternalLogin), _localizer[message]);
 
                         return Page();
                     }
 
                     result = await _userManager.AddLoginAsync(user, loginInfo);
-                    if (result.Succeeded)
-                    {
-                        _logger.LogInformation("User created an account using {Name} provider.",
-                            loginInfo.LoginProvider);
-                    }
-                    else
+                    if (!result.Succeeded)
                     {
                         foreach (var error in result.Errors)
                         {
@@ -94,18 +89,14 @@ namespace Atomic.UnifiedAuth.Pages.Account
                         return Page();
                     }
                 }
-                else
-                {
-                    _logger.LogInformation("User created a new account with password.");
-                }
 
                 await _signInManager.SignInAsync(user, false);
-                return LocalRedirect(returnUrl);
+                return Redirect(returnUrl);
             }
 
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("Register", _localizer[error.Description]);
+                ModelState.AddModelError(nameof(Register), error.Description);
             }
 
             return Page();

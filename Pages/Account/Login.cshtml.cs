@@ -66,19 +66,29 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("User {UserName} logged in", Input.UsernameOrEmailAddress);
                 return Redirect(returnUrl);
             }
 
+            // TODO: add 2fa logic
+
             if (result.IsLockedOut)
             {
-                _logger.LogInformation("User {UserName} is locked in", Input.UsernameOrEmailAddress);
+                _logger.LogInformation("User {UserName} is locked out", Input.UsernameOrEmailAddress);
                 var message = _localizer["The user is locked out, re-try in 5 minutes"];
-                ModelState.AddModelError("Login", message);
+                ModelState.AddModelError(nameof(Login), message);
                 return Page();
             }
 
-            ModelState.AddModelError("Login", _localizer["Your credential is invalid"]);
+            if (result.IsNotAllowed)
+            {
+                _logger.LogInformation("User {UserName} is not allowed to log in", Input.UsernameOrEmailAddress);
+                var message = _localizer["The user is not allowed to log in"];
+                ModelState.AddModelError(nameof(Login), message);
+                return Page();
+            }
+
+            // wrong username or password
+            ModelState.AddModelError(nameof(Login), _localizer["Your credential is invalid"]);
 
             return Page();
         }

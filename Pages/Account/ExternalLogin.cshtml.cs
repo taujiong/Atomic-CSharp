@@ -47,7 +47,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             if (remoteError != null)
             {
                 _logger.LogWarning("External login failed: {error}", remoteError);
-                ModelState.AddModelError("ExternalLogin", remoteError);
+                ModelState.AddModelError(nameof(ExternalLogin), remoteError);
 
                 return Page();
             }
@@ -57,7 +57,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             {
                 const string message = "Error loading external login information";
                 _logger.LogWarning(message);
-                ModelState.AddModelError("ExternalLogin", _localizer[message]);
+                ModelState.AddModelError(nameof(ExternalLogin), _localizer[message]);
 
                 return Page();
             }
@@ -71,17 +71,14 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (result.Succeeded)
             {
-                _logger.LogInformation("{Name} logged in with {LoginProvider} provider",
-                    username,
-                    loginInfo.LoginProvider);
-                return LocalRedirect(returnUrl);
+                return Redirect(returnUrl);
             }
 
             if (result.IsLockedOut)
             {
-                _logger.LogInformation("User {Username} is locked in", username);
+                _logger.LogInformation("User {Username} is locked out", username);
                 var message = _localizer["The user is locked out, re-try in 5 minutes"];
-                ModelState.AddModelError("Login", message);
+                ModelState.AddModelError(nameof(Login), message);
 
                 return Page();
             }

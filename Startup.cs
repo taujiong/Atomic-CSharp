@@ -113,6 +113,7 @@ namespace Atomic.UnifiedAuth
             });
 
             services.AddIdentity<AppUser, IdentityRole>()
+                .AddErrorDescriber<LocalizedIdentityErrorDescriber>()
                 .AddEntityFrameworkStores<AppDbContext>()
                 .AddDefaultTokenProviders();
 
