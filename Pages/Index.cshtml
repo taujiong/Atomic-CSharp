@@ -7,7 +7,6 @@
 
 @{
   ViewData["Title"] = _localizer["Welcome"];
-  var isAuthenticated = User.Identity is {IsAuthenticated: true };
   var userName = User.Identity?.Name;
 }
 
@@ -24,22 +23,13 @@
         <time class="has-text-grey-lighter is-size-1" id="time"></time>
       </div>
 
-      @if (!isAuthenticated)
-      {
-        <a asp-page="/Account/Login" class="button is-light mt-2">
-          @_localizer["Login"]
-        </a>
-      }
-      else
-      {
-        <h1 class="has-text-grey-lighter is-size-4">
-          @_localizer["Welcome"], @userName
-        </h1>
+      <h1 class="has-text-grey-lighter is-size-4">
+        @_localizer["Welcome"], @userName
+      </h1>
 
-        <a asp-page="/Account/Logout" class="button is-light mt-2">
-          @_localizer["Logout"]
-        </a>
-      }
+      <a asp-page="/Account/Logout" class="button is-light mt-2">
+        @_localizer["Logout"]
+      </a>
     </div>
   </div>
 </section>

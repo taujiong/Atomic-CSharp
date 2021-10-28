@@ -90,11 +90,12 @@ namespace Atomic.UnifiedAuth.Pages.Account
             return Page();
         }
 
-        public IActionResult OnGetCancel(string returnUrl = null)
+        public async Task<IActionResult> OnGetCancel(string returnUrl = null)
         {
-            returnUrl ??= Url.Content("~/");
+            ExternalSchemes = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ModelState.AddModelError(string.Empty, "Cancel will be implemented in IdentityServer");
 
-            return Redirect(returnUrl);
+            return Page();
         }
 
         private async Task ReplaceEmailToUsernameOfInputIfNeeds()

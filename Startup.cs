@@ -31,7 +31,10 @@ namespace Atomic.UnifiedAuth
 
             AddAuthentication(services);
 
-            services.AddRazorPages()
+            services.AddRazorPages(options =>
+                {
+                    options.Conventions.AuthorizePage("/Index");
+                })
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization(options =>
                 {
@@ -55,6 +58,7 @@ namespace Atomic.UnifiedAuth
             app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
