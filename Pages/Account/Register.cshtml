@@ -9,7 +9,11 @@
 <div class="box">
   <div class="has-text-centered is-size-1 mb-3">@_localizer["Register"]</div>
 
-  @await Html.PartialAsync("Shared/_ValidationSummary", ModelState)
+  @await Html.PartialAsync("Shared/_ValidationSummary", new ValidationSummaryModel
+  {
+    IsValid = ModelState.IsValid,
+    SummaryType = ValidationSummary.ModelOnly,
+  })
 
   <form method="post">
     <div class="field">

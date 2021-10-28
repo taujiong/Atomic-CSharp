@@ -1,9 +1,9 @@
-@model Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary
+@model Atomic.UnifiedAuth.Models.ValidationSummaryModel
 
 @if (!Model.IsValid)
 {
   <div class="message is-danger">
     <div class="message-header">Failed</div>
-    <div asp-validation-summary="All" class="message-body content"></div>
+    <div asp-validation-summary="@Model.SummaryType" class="message-body content"></div>
   </div>
 }
