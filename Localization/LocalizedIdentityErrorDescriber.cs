@@ -17,7 +17,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(DuplicateEmail),
-                Description = _localizer["IdentityError:DuplicateEmail", email],
+                Description = _localizer["Email '{0}' is already taken.", email],
             };
         }
 
@@ -26,7 +26,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(DuplicateUserName),
-                Description = _localizer["IdentityError:DuplicateUserName", userName],
+                Description = _localizer["Username '{0}' is already taken.", userName],
             };
         }
 
@@ -35,7 +35,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(InvalidEmail),
-                Description = _localizer["IdentityError:InvalidEmail", email]
+                Description = _localizer["Email '{0}' is invalid.", email]
             };
         }
 
@@ -44,7 +44,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(DuplicateRoleName),
-                Description = _localizer["IdentityError:DuplicateRoleName", role],
+                Description = _localizer["Role name '{0}' is already taken.", role],
             };
         }
 
@@ -53,7 +53,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(InvalidRoleName),
-                Description = _localizer["IdentityError:InvalidRoleName", role],
+                Description = _localizer["Role name '{0}' is invalid.", role],
             };
         }
 
@@ -62,7 +62,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(InvalidToken),
-                Description = _localizer["IdentityError:InvalidToken"],
+                Description = _localizer["Invalid token."],
             };
         }
 
@@ -71,7 +71,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(InvalidUserName),
-                Description = _localizer["IdentityError:InvalidUserName", userName],
+                Description = _localizer["Username '{0}' is invalid, can only contain letters or digits.", userName],
             };
         }
 
@@ -80,7 +80,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(LoginAlreadyAssociated),
-                Description = _localizer["IdentityError:LoginAlreadyAssociated"],
+                Description = _localizer["A user with this login already exists."],
             };
         }
 
@@ -89,7 +89,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(PasswordMismatch),
-                Description = _localizer["IdentityError:PasswordMismatch"],
+                Description = _localizer["Incorrect password."],
             };
         }
 
@@ -98,7 +98,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresDigit),
-                Description = _localizer["IdentityError:PasswordRequiresDigit"],
+                Description = _localizer["Passwords must have at least one digit ('0'-'9')."],
             };
         }
 
@@ -107,7 +107,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresLower),
-                Description = _localizer["IdentityError:PasswordRequiresLower"],
+                Description = _localizer["Passwords must have at least one non alphanumeric character."],
             };
         }
 
@@ -116,7 +116,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresNonAlphanumeric),
-                Description = _localizer["IdentityError:PasswordRequiresNonAlphanumeric"],
+                Description = _localizer["Passwords must have at least one non alphanumeric character."],
             };
         }
 
@@ -125,7 +125,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresUniqueChars),
-                Description = _localizer["IdentityError:PasswordRequiresUniqueChars", uniqueChars],
+                Description = _localizer["Passwords must use at least {0} different characters.", uniqueChars],
             };
         }
 
@@ -134,7 +134,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(PasswordRequiresUpper),
-                Description = _localizer["IdentityError:PasswordRequiresUpper"],
+                Description = _localizer["Passwords must have at least one uppercase ('A'-'Z')."],
             };
         }
 
@@ -143,7 +143,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(PasswordTooShort),
-                Description = _localizer["IdentityError:PasswordTooShort", length],
+                Description = _localizer["Passwords must be at least {0} characters.", length],
             };
         }
 
@@ -152,7 +152,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(UserAlreadyHasPassword),
-                Description = _localizer["IdentityError:UserAlreadyHasPassword"],
+                Description = _localizer["User already has a password set."],
             };
         }
 
@@ -161,7 +161,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(UserAlreadyInRole),
-                Description = _localizer["IdentityError:UserAlreadyInRole", role],
+                Description = _localizer["User already in role '{0}'.", role],
             };
         }
 
@@ -170,7 +170,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(UserNotInRole),
-                Description = _localizer["IdentityError:UserNotInRole", role],
+                Description = _localizer["User is not in role '{0}'.", role],
             };
         }
 
@@ -179,7 +179,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(UserLockoutNotEnabled),
-                Description = _localizer["IdentityError:UserLockoutNotEnabled"],
+                Description = _localizer["Lockout is not enabled for this user."],
             };
         }
 
@@ -188,7 +188,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(RecoveryCodeRedemptionFailed),
-                Description = _localizer["IdentityError:RecoveryCodeRedemptionFailed"],
+                Description = _localizer["Recovery code redemption failed."],
             };
         }
 
@@ -197,7 +197,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(ConcurrencyFailure),
-                Description = _localizer["IdentityError:ConcurrencyFailure"],
+                Description = _localizer["Optimistic concurrency failure, object has been modified."],
             };
         }
 
@@ -206,7 +206,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(DefaultError),
-                Description = _localizer["IdentityError:DefaultIdentityError"],
+                Description = _localizer["An unknown failure has occurred."],
             };
         }
     }
