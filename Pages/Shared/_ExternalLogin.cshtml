@@ -9,12 +9,12 @@
 
 @if (externalSchemes.Any())
 {
-  <div class="has-text-centered my-5">
+  <div class="has-text-centered my-2">
     <span>@_localizer[$"Use another service to {Model.Action}"]</span>
   </div>
 
   <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-    <div class="columns is-centered is-mobile">
+    <div class="columns is-centered is-mobile my-0">
       @foreach (var scheme in externalSchemes)
       {
         <button type="submit" class="social-button"
