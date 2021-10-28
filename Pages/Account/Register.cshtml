@@ -6,94 +6,79 @@
   ViewData["Title"] = _localizer["Register"];
 }
 
-<div class="box">
-  <div class="has-text-centered is-size-1 mb-3">@_localizer["Register"]</div>
+@await Html.PartialAsync("Shared/_ErrorNotification", Model.ErrorMessage)
 
-  @await Html.PartialAsync("Shared/_ValidationSummary", new ValidationSummaryModel
-  {
-    IsValid = ModelState.IsValid,
-    SummaryType = ValidationSummary.ModelOnly,
-  })
-
-  <form method="post">
-    <div class="field">
-      <label asp-for="Input.Username" class="label"></label>
-      <div class="control has-icons-left">
-        <input asp-for="Input.Username" class="input">
-        <span class="icon is-small is-left">
-          <svg aria-hidden="true" class="iconfont">
-            <use xlink:href="#icon-user"></use>
-          </svg>
-        </span>
-      </div>
-      <span asp-validation-for="Input.Username" class="help is-danger"></span>
+<form method="post">
+  <div class="field">
+    <label asp-for="Input.Username" class="label"></label>
+    <div class="control has-icons-left">
+      <input asp-for="Input.Username" class="input">
+      <span class="icon is-small is-left">
+        <svg aria-hidden="true" class="iconfont">
+          <use xlink:href="#icon-user"></use>
+        </svg>
+      </span>
     </div>
-
-    <div class="field">
-      <label asp-for="Input.EmailAddress" class="label"></label>
-      <div class="control has-icons-left">
-        <input asp-for="Input.EmailAddress" class="input">
-        <span class="icon is-small is-left">
-          <svg aria-hidden="true" class="iconfont">
-            <use xlink:href="#icon-email"></use>
-          </svg>
-        </span>
-      </div>
-      <span asp-validation-for="Input.EmailAddress" class="help is-danger"></span>
-    </div>
-
-    <div class="field">
-      <label asp-for="Input.Password" class="label"></label>
-      <div class="control has-icons-left">
-        <input asp-for="Input.Password" class="input">
-        <span class="icon is-small is-left">
-          <svg aria-hidden="true" class="iconfont">
-            <use xlink:href="#icon-lock"></use>
-          </svg>
-        </span>
-      </div>
-      <span asp-validation-for="Input.Password" class="help is-danger"></span>
-    </div>
-
-    <div class="field">
-      <label asp-for="Input.ConfirmPassword" class="label"></label>
-      <div class="control has-icons-left">
-        <input asp-for="Input.ConfirmPassword" class="input">
-        <span class="icon is-small is-left">
-          <svg aria-hidden="true" class="iconfont">
-            <use xlink:href="#icon-lock"></use>
-          </svg>
-        </span>
-      </div>
-      <span asp-validation-for="Input.ConfirmPassword" class="help is-danger"></span>
-    </div>
-
-    <button class="button is-primary is-rounded is-fullwidth my-4">
-      @_localizer["Register"]
-    </button>
-  </form>
-
-  @if (!Model.IsExternal)
-  {
-    @await Html.PartialAsync("Shared/_ExternalLogin", new ExternalLoginPartialModel
-    {
-      ExternalSchemes = Model.ExternalSchemes,
-      Action = "register",
-      ReturnUrl = Model.ReturnUrl
-    })
-  }
-
-  <div class="has-text-centered">
-    <a asp-page="./Login"
-       asp-route-returnUrl="@Model.ReturnUrl"
-       class="is-size-6 mx-1">
-      @_localizer["Login"]
-    </a>
-    <a asp-page="./Login"
-       asp-page-handler="Cancel"
-       asp-route-returnUrl="@Model.ReturnUrl"
-       class="is-size-6 mx-1">
-      @_localizer["Cancel"]
-    </a>
+    <span asp-validation-for="Input.Username" class="help is-danger"></span>
   </div>
+
+  <div class="field">
+    <label asp-for="Input.EmailAddress" class="label"></label>
+    <div class="control has-icons-left">
+      <input asp-for="Input.EmailAddress" class="input">
+      <span class="icon is-small is-left">
+        <svg aria-hidden="true" class="iconfont">
+          <use xlink:href="#icon-email"></use>
+        </svg>
+      </span>
+    </div>
+    <span asp-validation-for="Input.EmailAddress" class="help is-danger"></span>
+  </div>
+
+  <div class="field">
+    <label asp-for="Input.Password" class="label"></label>
+    <div class="control has-icons-left">
+      <input asp-for="Input.Password" class="input">
+      <span class="icon is-small is-left">
+        <svg aria-hidden="true" class="iconfont">
+          <use xlink:href="#icon-lock"></use>
+        </svg>
+      </span>
+    </div>
+    <span asp-validation-for="Input.Password" class="help is-danger"></span>
+  </div>
+
+  <div class="field">
+    <label asp-for="Input.ConfirmPassword" class="label"></label>
+    <div class="control has-icons-left">
+      <input asp-for="Input.ConfirmPassword" class="input">
+      <span class="icon is-small is-left">
+        <svg aria-hidden="true" class="iconfont">
+          <use xlink:href="#icon-lock"></use>
+        </svg>
+      </span>
+    </div>
+    <span asp-validation-for="Input.ConfirmPassword" class="help is-danger"></span>
+  </div>
+
+  <button class="button is-primary is-rounded is-fullwidth my-4">
+    @_localizer["Register"]
+  </button>
+</form>
+
+@if (!Model.IsExternal)
+{
+  @await Html.PartialAsync("Shared/_ExternalLogin", new ExternalLoginPartialModel
+  {
+    Action = "register",
+    ReturnUrl = Model.ReturnUrl
+  })
+}
+
+<div class="has-text-centered">
+  <a asp-page="./Login"
+     asp-route-returnUrl="@Model.ReturnUrl"
+     class="is-size-6 mx-1">
+    @_localizer["Login"]
+  </a>
 </div>

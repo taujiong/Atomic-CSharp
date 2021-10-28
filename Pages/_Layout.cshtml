@@ -22,9 +22,31 @@
   <title>@title</title>
 
   <link href="https://cdn.bootcdn.net/ajax/libs/bulma/0.9.1/css/bulma.min.css" rel="stylesheet">
-  @await RenderSectionAsync("Head", false)
+  <link asp-append-version="true" href="/styles/site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-@RenderBody()
+<ul class="bg-bubbles">
+  @for (var n = 0; n < 10; n++)
+  {
+    <li></li>
+  }
+</ul>
+
+<section class="hero is-fullheight background">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered is-flex-mobile">
+        <div class="column" style="max-width: 410px;">
+          <div class="box">
+            <div class="has-text-centered is-size-2 mb-4">@ViewData["Title"]</div>
+            @RenderBody()
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="/js/iconfont.js"></script>
 </body>
 </html>

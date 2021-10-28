@@ -1,23 +1,29 @@
+@using Atomic.UnifiedAuth.Models
+@using Microsoft.AspNetCore.Identity
 @model Atomic.UnifiedAuth.Models.ExternalLoginPartialModel
+@inject SignInManager<AppUser> _signInManager
 
-  @if (Model.ExternalSchemes.Any())
-  {
-    <div class="has-text-centered my-5">
-      <span>@_localizer[$"Use another service to {Model.Action}"]</span>
+@{
+  var externalSchemes = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToArray();
+}
+
+@if (externalSchemes.Any())
+{
+  <div class="has-text-centered my-5">
+    <span>@_localizer[$"Use another service to {Model.Action}"]</span>
+  </div>
+
+  <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div class="columns is-centered is-mobile">
+      @foreach (var scheme in externalSchemes)
+      {
+        <button type="submit" class="social-button"
+                name="scheme" value="@scheme.Name">
+          <svg class="iconfont">
+            <use xlink:href="#icon-@scheme.DisplayName?.ToLower()"></use>
+          </svg>
+        </button>
+      }
     </div>
-
-    <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-      <div class="columns is-centered is-mobile">
-        @foreach (var scheme in Model.ExternalSchemes)
-        {
-          <button type="submit" class="social-button"
-                  name="scheme" value="@scheme.Name">
-            <svg class="iconfont">
-              <use xlink:href="#icon-@scheme.DisplayName?.ToLower()"></use>
-            </svg>
-          </button>
-        }
-      </div>
-    </form>
-  }
-
+  </form>
+}

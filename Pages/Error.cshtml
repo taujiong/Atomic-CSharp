@@ -1,0 +1,19 @@
+﻿@page
+
+@{
+  ViewData["Title"] = _localizer["Invalid operation"];
+}
+
+<div class="block">
+  @_localizer["Oops, unexpected error occured:"]
+</div>
+
+<div class="block">
+  @TempData["InvalidOperation"]
+</div>
+
+<div class="has-text-centered">
+  <a asp-page="Index" class="button is-primary">
+    @_localizer["Go Home"]
+  </a>
+</div>

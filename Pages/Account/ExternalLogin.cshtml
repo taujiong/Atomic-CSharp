@@ -1,13 +1,2 @@
 ﻿@page
-@inject IViewLocalizer _viewLocalizer
-@using Microsoft.AspNetCore.Mvc.Localization
 @model Atomic.UnifiedAuth.Pages.Account.ExternalLogin
-
-@{
-  ViewData["Title"] = _localizer["External login"];
-}
-
-<div class="message is-warning">
-  <div class="message-header">Failed</div>
-  <div asp-validation-summary="All" class="message-body content"></div>
-</div>

@@ -29,6 +29,9 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
         public string ReturnUrl { get; set; }
 
+        [TempData]
+        public string InvalidOperation { get; set; }
+
         public IActionResult OnPost(string scheme, string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -47,9 +50,8 @@ namespace Atomic.UnifiedAuth.Pages.Account
             if (remoteError != null)
             {
                 _logger.LogWarning("External login failed: {error}", remoteError);
-                ModelState.AddModelError(string.Empty, remoteError);
-
-                return Page();
+                InvalidOperation = remoteError;
+                return RedirectToPage("/Error");
             }
 
             var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
@@ -57,9 +59,8 @@ namespace Atomic.UnifiedAuth.Pages.Account
             {
                 const string message = "Error loading external login information";
                 _logger.LogWarning(message);
-                ModelState.AddModelError(string.Empty, _localizer[message]);
-
-                return Page();
+                InvalidOperation = _localizer[message];
+                return LocalRedirect("/Error");
             }
 
             var username = loginInfo.Principal.FindFirstValue(ClaimTypes.Name);
@@ -77,17 +78,14 @@ namespace Atomic.UnifiedAuth.Pages.Account
             if (result.IsLockedOut)
             {
                 _logger.LogInformation("User {Username} is locked out", username);
-                var message = _localizer["The user is locked out, re-try in 5 minutes"];
-                ModelState.AddModelError(string.Empty, message);
-
-                return Page();
+                InvalidOperation = _localizer["The user is locked out, re-try in 5 minutes"];
+                return RedirectToPage("/Error");
             }
 
             if (result.IsNotAllowed)
             {
-                var message = _localizer["The user is not allowed to log in"];
-                ModelState.AddModelError(string.Empty, message);
-                return Page();
+                InvalidOperation = _localizer["The user is not allowed to log in"];
+                return RedirectToPage("/Error");
             }
 
             // If the user does not have an account, then redirect to register page.

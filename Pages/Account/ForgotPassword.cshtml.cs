@@ -31,6 +31,8 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
         public bool LinkSent { get; set; }
 
+        public string ErrorMessage { get; set; }
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid) return Page();
@@ -39,15 +41,13 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, _localizer["Can not find a user with given email address"]);
+                ErrorMessage = _localizer["Can not find a user with given email address"];
                 return Page();
             }
 
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var callbackUrl = Url.Page(
                 "./ResetPassword",
-                null,
                 new { code, userId = user.Id }
             );
 
