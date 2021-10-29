@@ -1,10 +1,12 @@
 ﻿@page
 @model Atomic.UnifiedAuth.Pages.ErrorPageModel
 
-<div class="has-text-centered is-size-2 mb-4">@Model.ErrorCode</div>
+@{
+  ViewData["Title"] = _localizer["Error"];
+}
 
 <div class="block">
-  @_localizer["Oops, unexpected error occured:"]
+  @_localizer["Oops, unexpected error occured when visiting {0}:", Model.Path]
 </div>
 
 <div class="block">

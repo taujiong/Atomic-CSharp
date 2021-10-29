@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
@@ -30,9 +31,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
         public IActionResult OnGet(string code, string userId)
         {
             if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(userId))
-            {
-                return RedirectToError(400, _localizer["Wrong password reset link."]);
-            }
+                throw new Exception(_localizer["Wrong password reset link."]);
 
             Input = new ResetPasswordModel
             {

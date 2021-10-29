@@ -15,14 +15,5 @@ namespace Atomic.UnifiedAuth.Pages.Account
         {
             return Redirect(ReturnUrl ?? "~/");
         }
-
-        protected IActionResult RedirectToError(int statusCode, string errorMessage)
-        {
-            return RedirectToPage("/Error", new
-            {
-                ErrorCode = statusCode,
-                ErrorMessage = errorMessage,
-            });
-        }
     }
 }
