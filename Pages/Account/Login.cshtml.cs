@@ -1,6 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
+using IdentityServer4.Models;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +13,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
 {
     public class LoginPageModel : AccountPageModel
     {
+        private readonly IIdentityServerInteractionService _interaction;
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
@@ -17,12 +21,14 @@ namespace Atomic.UnifiedAuth.Pages.Account
         public LoginPageModel(
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
-            IStringLocalizer<AccountResource> localizer
+            IStringLocalizer<AccountResource> localizer,
+            IIdentityServerInteractionService interaction
         )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _localizer = localizer;
+            _interaction = interaction;
         }
 
         [BindProperty]
@@ -32,11 +38,19 @@ namespace Atomic.UnifiedAuth.Pages.Account
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+
+            var context = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
+            Input = new LoginInputModel
+            {
+                UsernameOrEmailAddress = context?.LoginHint,
+            };
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid) return Page();
+
+            var context = _interaction.GetAuthorizationContextAsync(ReturnUrl);
 
             await ReplaceEmailToUsernameOfInputIfNeeds();
             var result = await _signInManager.PasswordSignInAsync(
@@ -47,7 +61,10 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (result.Succeeded)
             {
-                return RedirectSafely();
+                if (context != null || Url.IsLocalUrl(ReturnUrl) || string.IsNullOrEmpty(ReturnUrl))
+                    return RedirectSafely();
+
+                throw new Exception(_localizer["Invalid return url."]);
             }
 
             // TODO: add 2fa logic
@@ -67,6 +84,18 @@ namespace Atomic.UnifiedAuth.Pages.Account
             // wrong username or password
             PageErrorMessage = _localizer["Your credential is invalid"];
             return Page();
+        }
+
+        public async Task<IActionResult> OnGetCancelAsync()
+        {
+            var context = await _interaction.GetAuthorizationContextAsync(ReturnUrl);
+            if (context != null)
+            {
+                await _interaction.DenyAuthorizationAsync(context, AuthorizationError.AccessDenied);
+                return Redirect(ReturnUrl);
+            }
+
+            return Redirect("~/");
         }
 
         private async Task ReplaceEmailToUsernameOfInputIfNeeds()

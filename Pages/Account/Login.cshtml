@@ -56,6 +56,12 @@
      class="is-size-6 mx-1">
     @_localizer["Register"]
   </a>
+  <a asp-page="./Login"
+     asp-page-handler="Cancel"
+     asp-route-ReturnUrl="@Model.ReturnUrl"
+     class="is-size-6 mx-1">
+    @_localizer["Cancel"]
+  </a>
   <a asp-page="./ForgotPassword" class="is-size-6 mx-1">
     @_localizer["Forgot password"]
   </a>

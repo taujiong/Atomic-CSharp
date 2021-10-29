@@ -283,3 +283,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore,jetbrains+all,windows,macos,node
+
+tempkey.jwk
+appsettings.*.json

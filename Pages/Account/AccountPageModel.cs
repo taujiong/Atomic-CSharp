@@ -11,6 +11,9 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
         public string PageErrorMessage { get; protected set; }
 
+        /// <summary>
+        /// return to home page if return url is null
+        /// </summary>
         protected IActionResult RedirectSafely()
         {
             return Redirect(ReturnUrl ?? "~/");

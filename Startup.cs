@@ -18,18 +18,23 @@ namespace Atomic.UnifiedAuth
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         private IConfiguration Configuration { get; }
+
+        private IWebHostEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
             AddLocalization(services);
 
             AddAuthentication(services);
+
+            AddIdentityServer(services);
 
             services.AddRazorPages(options =>
                 {
@@ -43,13 +48,13 @@ namespace Atomic.UnifiedAuth
                 });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             var localizationOptions =
                 app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>();
             app.UseRequestLocalization(localizationOptions.Value);
 
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -61,7 +66,7 @@ namespace Atomic.UnifiedAuth
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -112,6 +117,42 @@ namespace Atomic.UnifiedAuth
                     options.ClientId = Configuration["ExternalIdentityProviders:GitHub:ClientId"];
                     options.ClientSecret = Configuration["ExternalIdentityProviders:GitHub:ClientSecret"];
                 });
+        }
+
+        private void AddIdentityServer(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("IdentityServer");
+            var builder = services.AddIdentityServer(options =>
+                {
+                    options.IssuerUri = Configuration["AuthServer:IssuerUri"];
+                    options.UserInteraction.ErrorUrl = "/Error";
+                })
+                .AddAspNetIdentity<AppUser>();
+
+            if (Environment.IsDevelopment())
+            {
+                builder.AddInMemoryClients(IdentityServerConfig.Clients)
+                    .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
+                    .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
+                    .AddDeveloperSigningCredential();
+            }
+            else
+            {
+                builder.AddConfigurationStore(options =>
+                    {
+                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, builder =>
+                        {
+                            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                        });
+                    })
+                    .AddOperationalStore(options =>
+                    {
+                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, builder =>
+                        {
+                            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                        });
+                    });
+            }
         }
     }
 }
