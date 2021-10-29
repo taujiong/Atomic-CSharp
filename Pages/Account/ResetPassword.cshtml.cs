@@ -4,12 +4,11 @@ using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class ResetPassword : PageModel
+    public class ResetPassword : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly UserManager<AppUser> _userManager;
@@ -28,17 +27,13 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
         public bool PasswordReset { get; set; }
 
-        public string ErrorMessage { get; set; }
-
-        [TempData]
-        public string InvalidOperation { get; set; }
-
         public IActionResult OnGet(string code, string userId)
         {
             if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(userId))
             {
-                InvalidOperation = _localizer["Wrong password reset link."];
-                return LocalRedirect("/Error");
+                return RedirectToError(_localizer["Wrong password reset link."]);
+                // ServerErrorMessage = _localizer["Wrong password reset link."];
+                // return RedirectToPage("/Error");
             }
 
             Input = new ResetPasswordModel
@@ -63,7 +58,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 return Page();
             }
 
-            ErrorMessage = result.Errors.First().Description;
+            ServerErrorMessage = result.Errors.First().Description;
             return Page();
         }
     }

@@ -4,13 +4,12 @@ using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class Register : PageModel
+    public class Register : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly ILogger<Register> _logger;
@@ -34,14 +33,10 @@ namespace Atomic.UnifiedAuth.Pages.Account
         [BindProperty]
         public RegisterInputModel Input { get; set; }
 
-        public string ReturnUrl { get; set; }
-
         [BindProperty(SupportsGet = true)]
         public bool IsExternal { get; set; }
 
-        public string ErrorMessage { get; set; }
-
-        public IActionResult OnGetAsync(string username, string emailAddress, string returnUrl = null)
+        public IActionResult OnGetAsync(string username, string emailAddress)
         {
             Input = new RegisterInputModel
             {
@@ -49,14 +44,11 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 EmailAddress = emailAddress,
             };
 
-            ReturnUrl = returnUrl ?? Url.Content("~/");
-
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync()
         {
-            returnUrl ??= Url.Content("~/");
             if (!ModelState.IsValid) return Page();
 
             var user = new AppUser { UserName = Input.Username, Email = Input.EmailAddress };
@@ -70,7 +62,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
                     {
                         const string message = "Error loading external login information";
                         _logger.LogWarning(message);
-                        ErrorMessage = _localizer[message];
+                        PageErrorMessage = _localizer[message];
 
                         return Page();
                     }
@@ -78,16 +70,16 @@ namespace Atomic.UnifiedAuth.Pages.Account
                     result = await _userManager.AddLoginAsync(user, loginInfo);
                     if (!result.Succeeded)
                     {
-                        ErrorMessage = result.Errors.First().Description;
+                        PageErrorMessage = result.Errors.First().Description;
                         return Page();
                     }
                 }
 
                 await SignInManager.SignInAsync(user, false);
-                return Redirect(returnUrl);
+                return RedirectSafely();
             }
 
-            ErrorMessage = result.Errors.First().Description;
+            PageErrorMessage = result.Errors.First().Description;
             return Page();
         }
     }

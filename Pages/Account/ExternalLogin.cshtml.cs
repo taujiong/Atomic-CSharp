@@ -4,13 +4,12 @@ using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class ExternalLogin : PageModel
+    public class ExternalLogin : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly ILogger<ExternalLogin> _logger;
@@ -27,31 +26,21 @@ namespace Atomic.UnifiedAuth.Pages.Account
             _localizer = localizer;
         }
 
-        public string ReturnUrl { get; set; }
-
-        [TempData]
-        public string InvalidOperation { get; set; }
-
-        public IActionResult OnPost(string scheme, string returnUrl = null)
+        public IActionResult OnPost(string scheme)
         {
-            returnUrl ??= Url.Content("~/");
-
             // Request a redirect to the external login provider.
-            var redirectUrl = Url.Page("./ExternalLogin", "Callback", new { returnUrl });
+            var redirectUrl = Url.Page("./ExternalLogin", "Callback", new { ReturnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(scheme, redirectUrl);
             return new ChallengeResult(scheme, properties);
         }
 
-        public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
+        public async Task<IActionResult> OnGetCallbackAsync(string remoteError = null)
         {
-            returnUrl ??= Url.Content("~/");
-            ReturnUrl = returnUrl;
-
             if (remoteError != null)
             {
                 _logger.LogWarning("External login failed: {error}", remoteError);
-                InvalidOperation = remoteError;
-                return RedirectToPage("/Error");
+                ServerErrorMessage = remoteError;
+                return LocalRedirect("/Error");
             }
 
             var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
@@ -59,7 +48,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             {
                 const string message = "Error loading external login information";
                 _logger.LogWarning(message);
-                InvalidOperation = _localizer[message];
+                ServerErrorMessage = _localizer[message];
                 return LocalRedirect("/Error");
             }
 
@@ -72,20 +61,19 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (result.Succeeded)
             {
-                return Redirect(returnUrl);
+                return RedirectSafely();
             }
 
             if (result.IsLockedOut)
             {
-                _logger.LogInformation("User {Username} is locked out", username);
-                InvalidOperation = _localizer["The user is locked out, re-try in 5 minutes"];
-                return RedirectToPage("/Error");
+                ServerErrorMessage = _localizer["The user is locked out, re-try in 5 minutes"];
+                return LocalRedirect("/Error");
             }
 
             if (result.IsNotAllowed)
             {
-                InvalidOperation = _localizer["The user is not allowed to log in"];
-                return RedirectToPage("/Error");
+                ServerErrorMessage = _localizer["The user is not allowed to log in"];
+                return LocalRedirect("/Error");
             }
 
             // If the user does not have an account, then redirect to register page.
@@ -94,7 +82,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 IsExternal = true,
                 username,
                 emailAddress,
-                returnUrl,
+                ReturnUrl
             });
         }
     }

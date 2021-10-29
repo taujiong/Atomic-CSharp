@@ -1,7 +1,7 @@
+@inject SignInManager<AppUser> _signInManager
 @using Atomic.UnifiedAuth.Models
 @using Microsoft.AspNetCore.Identity
-@model Atomic.UnifiedAuth.Models.ExternalLoginPartialModel
-@inject SignInManager<AppUser> _signInManager
+@model string
 
 @{
   var externalSchemes = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToArray();
@@ -10,10 +10,12 @@
 @if (externalSchemes.Any())
 {
   <div class="has-text-centered my-2">
-    <span>@_localizer[$"Use another service to {Model.Action}"]</span>
+    <span>@_localizer["Use another service"]</span>
   </div>
 
-  <form asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+  <form asp-page="./ExternalLogin"
+        asp-route-ReturnUrl="@Model"
+        method="post">
     <div class="columns is-centered is-mobile my-0">
       @foreach (var scheme in externalSchemes)
       {

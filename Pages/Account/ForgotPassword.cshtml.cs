@@ -3,13 +3,12 @@ using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class ForgotPassword : PageModel
+    public class ForgotPassword : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly ILogger<ForgotPassword> _logger;
@@ -31,8 +30,6 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
         public bool LinkSent { get; set; }
 
-        public string ErrorMessage { get; set; }
-
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid) return Page();
@@ -41,7 +38,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (user == null)
             {
-                ErrorMessage = _localizer["Can not find a user with given email address"];
+                PageErrorMessage = _localizer["Can not find a user with given email address"];
                 return Page();
             }
 

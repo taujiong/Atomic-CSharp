@@ -2,12 +2,11 @@
 using Atomic.UnifiedAuth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class Logout : PageModel
+    public class Logout : AccountPageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
 
@@ -16,13 +15,11 @@ namespace Atomic.UnifiedAuth.Pages.Account
             _signInManager = signInManager;
         }
 
-        public async Task<IActionResult> OnGetAsync(string returnUrl = null)
+        public async Task<IActionResult> OnGetAsync()
         {
-            returnUrl ??= Url.Content("~/");
-
             await _signInManager.SignOutAsync();
 
-            return Redirect(returnUrl);
+            return Redirect("~/");
         }
     }
 }

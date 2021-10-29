@@ -4,12 +4,11 @@ using Atomic.UnifiedAuth.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class Login : PageModel
+    public class Login : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly SignInManager<AppUser> _signInManager;
@@ -29,23 +28,14 @@ namespace Atomic.UnifiedAuth.Pages.Account
         [BindProperty]
         public LoginInputModel Input { get; set; }
 
-        public string ReturnUrl { get; set; }
-
-        public string ErrorMessage { get; set; }
-
-        public async Task OnGetAsync(string returnUrl = null)
+        public async Task OnGetAsync()
         {
-            returnUrl ??= Url.Content("~/");
-
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ReturnUrl = returnUrl;
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync()
         {
-            returnUrl ??= Url.Content("~/");
             if (!ModelState.IsValid) return Page();
 
             await ReplaceEmailToUsernameOfInputIfNeeds();
@@ -57,25 +47,25 @@ namespace Atomic.UnifiedAuth.Pages.Account
 
             if (result.Succeeded)
             {
-                return Redirect(returnUrl);
+                return RedirectSafely();
             }
 
             // TODO: add 2fa logic
 
             if (result.IsLockedOut)
             {
-                ErrorMessage = _localizer["The user is locked out, re-try in 5 minutes"];
+                PageErrorMessage = _localizer["The user is locked out, re-try in 5 minutes"];
                 return Page();
             }
 
             if (result.IsNotAllowed)
             {
-                ErrorMessage = _localizer["The user is not allowed to log in"];
+                PageErrorMessage = _localizer["The user is not allowed to log in"];
                 return Page();
             }
 
             // wrong username or password
-            ErrorMessage = _localizer["Your credential is invalid"];
+            PageErrorMessage = _localizer["Your credential is invalid"];
             return Page();
         }
 
