@@ -1,0 +1,133 @@
+﻿@page
+@using IdentityServer4.Extensions
+@model Atomic.UnifiedAuth.Pages.ConsentPageModel
+
+<div class="box">
+  @if (Model.ConsentClient.ClientLogoUrl != null)
+  {
+    <div class="is-mobile level">
+      <div class="level-left logo-client-wrapper">
+        <img alt="ClientLogo"
+             class="logo-client"
+             src="@Model.ConsentClient.ClientLogoUrl">
+      </div>
+      <div class="connection">
+        <svg aria-hidden="true"
+             class="icon-tick">
+          <use xlink:href="#icon-success"></use>
+        </svg>
+      </div>
+      <div class="logo-client-wrapper">
+        <svg aria-hidden="true"
+             class="logo-client">
+          <use xlink:href="#icon-guard"></use>
+        </svg>
+      </div>
+    </div>
+  }
+
+  <div class="has-text-centered mb-3">
+    <div class="has-text-dark has-text-weight-medium is-size-4">
+      @Model.ConsentClient.ClientName
+    </div>
+    <div class="has-text-grey">
+      wants to access your account:
+      <span class="has-text-weight-medium">
+        @Model.UserName
+      </span>
+    </div>
+  </div>
+
+  <form method="post">
+    <input asp-for="ReturnUrl" />
+
+    <div class="box is-radiusless mb-3 px-0 py-0">
+      @if (!Model.Input.IdentityScopes.IsNullOrEmpty())
+      {
+        <div class="has-background-grey-lighter is-mobile level mb-2 px-2">
+          <div class="level-left">
+            <svg aria-hidden="true"
+                 class="icon is-small mr-2">
+              <use xlink:href="#icon-person"></use>
+            </svg>
+            <h3>Personal Information</h3>
+          </div>
+        </div>
+
+        <ul class="mb-2 mx-2">
+          @for (var i = 0; i < Model.Input.IdentityScopes.Count; i++)
+          {
+            <li class="mt-2">
+              <label asp-for="@Model.Input.IdentityScopes[i].Checked"
+                     class="level-left">
+                <input asp-for="@Model.Input.IdentityScopes[i].Checked" />
+                @Model.Input.IdentityScopes[i].DisplayName
+                @if (Model.Input.IdentityScopes[i].Required)
+                {
+                  <span style="color: red">*</span>
+                }
+              </label>
+              <input asp-for="@Model.Input.IdentityScopes[i].Name" />
+            </li>
+          }
+        </ul>
+      }
+
+      @if (!Model.Input.ApiScopes.IsNullOrEmpty())
+      {
+        <div class="has-background-grey-lighter is-mobile level mb-2 px-2">
+          <div class="level-left">
+            <svg aria-hidden="true"
+                 class="icon is-small mr-2">
+              <use xlink:href="#icon-app"></use>
+            </svg>
+            <h3>Application Access</h3>
+          </div>
+        </div>
+
+        <ul class="mx-2 pb-2">
+          @for (var i = 0; i < Model.Input.ApiScopes.Count; i++)
+          {
+            <li class="list-group-item">
+              <label asp-for="@Model.Input.ApiScopes[i].Checked"
+                     class="level-left">
+                <input asp-for="@Model.Input.ApiScopes[i].Checked"
+                       disabled="@Model.Input.ApiScopes[i].Required" />
+                @Model.Input.ApiScopes[i].DisplayName
+                @if (Model.Input.ApiScopes[i].Required)
+                {
+                  <span style="color: red">
+                    *
+                  </span>
+                }
+              </label>
+              <input asp-for="@Model.Input.ApiScopes[i].Name" />
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    @if (Model.ConsentClient.AllowRememberConsent)
+    {
+      <label asp-for="@Model.Input.RememberConsent"
+             class="level-left ml-2">
+        <input asp-for="@Model.Input.RememberConsent" />
+        <strong>Remember My Decision</strong>
+      </label>
+    }
+
+    <div class="buttons mt-5">
+      <button class="button is-primary"
+              name="UserDecision"
+              value="yes">
+        Yes, Allow
+      </button>
+      <button class="button"
+              name="UserDecision"
+              value="no">
+        No, Refuse
+      </button>
+    </div>
+  </form>
+</div>

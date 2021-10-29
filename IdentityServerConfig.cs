@@ -37,7 +37,7 @@ namespace Atomic.UnifiedAuth
                     AllowOfflineAccess = true,
                     AlwaysIncludeUserClaimsInIdToken = true,
                     AccessTokenLifetime = 5,
-                    // RequireConsent = true,
+                    RequireConsent = true,
 
                     AllowedScopes =
                     {
