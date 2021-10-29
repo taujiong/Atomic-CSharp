@@ -33,7 +33,7 @@ namespace Atomic.UnifiedAuth
 
             services.AddRazorPages(options =>
                 {
-                    options.Conventions.AuthorizePage("/Index");
+                    options.Conventions.AuthorizePage("/Profile");
                 })
                 .AddViewLocalization()
                 .AddDataAnnotationsLocalization(options =>

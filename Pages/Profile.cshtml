@@ -1,0 +1,15 @@
+﻿@page
+
+@{
+  ViewData["Title"] = _localizer["Profile"];
+}
+
+<div class="block has-text-centered">
+  @User.Identity?.Name
+</div>
+
+<div class="has-text-centered">
+  <a asp-page="Account/Logout" class="button is-primary">
+    @_localizer["Logout"]
+  </a>
+</div>
