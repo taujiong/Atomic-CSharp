@@ -1,15 +1,14 @@
 ﻿@page
+@model Atomic.UnifiedAuth.Pages.Error
 
-@{
-  ViewData["Title"] = _localizer["Invalid operation"];
-}
+<div class="has-text-centered is-size-2 mb-4">@Model.ErrorCode</div>
 
 <div class="block">
   @_localizer["Oops, unexpected error occured:"]
 </div>
 
 <div class="block">
-  @TempData["ServerErrorMessage"]
+  @Model.ErrorMessage
 </div>
 
 <div class="has-text-centered">

@@ -39,8 +39,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             if (remoteError != null)
             {
                 _logger.LogWarning("External login failed: {error}", remoteError);
-                ServerErrorMessage = remoteError;
-                return LocalRedirect("/Error");
+                return RedirectToError(500, remoteError);
             }
 
             var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
@@ -48,8 +47,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             {
                 const string message = "Error loading external login information";
                 _logger.LogWarning(message);
-                ServerErrorMessage = _localizer[message];
-                return LocalRedirect("/Error");
+                return RedirectToError(500, _localizer[message]);
             }
 
             var username = loginInfo.Principal.FindFirstValue(ClaimTypes.Name);
@@ -60,21 +58,13 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 false, true);
 
             if (result.Succeeded)
-            {
                 return RedirectSafely();
-            }
 
             if (result.IsLockedOut)
-            {
-                ServerErrorMessage = _localizer["The user is locked out, re-try in 5 minutes"];
-                return LocalRedirect("/Error");
-            }
+                return RedirectToError(401, _localizer["The user is locked out, re-try in 5 minutes"]);
 
             if (result.IsNotAllowed)
-            {
-                ServerErrorMessage = _localizer["The user is not allowed to log in"];
-                return LocalRedirect("/Error");
-            }
+                return RedirectToError(401, _localizer["The user is not allowed to log in"]);
 
             // If the user does not have an account, then redirect to register page.
             return RedirectToPage("./Register", new

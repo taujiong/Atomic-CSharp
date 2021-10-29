@@ -31,9 +31,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
         {
             if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(userId))
             {
-                return RedirectToError(_localizer["Wrong password reset link."]);
-                // ServerErrorMessage = _localizer["Wrong password reset link."];
-                // return RedirectToPage("/Error");
+                return RedirectToError(400, _localizer["Wrong password reset link."]);
             }
 
             Input = new ResetPasswordModel
@@ -58,7 +56,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 return Page();
             }
 
-            ServerErrorMessage = result.Errors.First().Description;
+            PageErrorMessage = result.Errors.First().Description;
             return Page();
         }
     }

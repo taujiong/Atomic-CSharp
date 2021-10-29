@@ -9,9 +9,6 @@ namespace Atomic.UnifiedAuth.Pages.Account
         [BindProperty(SupportsGet = true)]
         public string ReturnUrl { get; set; }
 
-        [TempData]
-        public string ServerErrorMessage { get; set; }
-
         public string PageErrorMessage { get; protected set; }
 
         protected IActionResult RedirectSafely()
@@ -19,10 +16,13 @@ namespace Atomic.UnifiedAuth.Pages.Account
             return Redirect(ReturnUrl ?? "~/");
         }
 
-        protected IActionResult RedirectToError(string errorMessage)
+        protected IActionResult RedirectToError(int statusCode, string errorMessage)
         {
-            ServerErrorMessage = errorMessage;
-            return LocalRedirect("/Error");
+            return RedirectToPage("/Error", new
+            {
+                ErrorCode = statusCode,
+                ErrorMessage = errorMessage,
+            });
         }
     }
 }
