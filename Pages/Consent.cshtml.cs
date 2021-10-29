@@ -54,11 +54,11 @@ namespace Atomic.UnifiedAuth.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string userDecision)
         {
             var context = await GetAuthorizationContextAsync(ReturnUrl);
 
-            var grantedConsent = Input.UserDecision == "no"
+            var grantedConsent = "no".Equals(userDecision)
                 ? new ConsentResponse { Error = AuthorizationError.AccessDenied }
                 : new ConsentResponse
                 {

@@ -26,6 +26,8 @@ namespace Atomic.UnifiedAuth
                 new()
                 {
                     ClientId = "mvc",
+                    ClientName = "MVC web",
+                    LogoUri = "favicon/android-chrome-512x512.png",
 
                     AllowedGrantTypes = GrantTypes.Code,
                     ClientSecrets = { new Secret("mvc".Sha256()) },

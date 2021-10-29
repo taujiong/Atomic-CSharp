@@ -6,7 +6,7 @@ namespace Atomic.UnifiedAuth.Models
     {
         public ClientModel(Client client)
         {
-            ClientName = client.ClientId;
+            ClientName = client.ClientName ?? client.ClientId;
             ClientUrl = client.ClientUri;
             ClientLogoUrl = client.LogoUri;
             AllowRememberConsent = client.AllowRememberConsent;

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Atomic.UnifiedAuth.Models
@@ -9,9 +8,6 @@ namespace Atomic.UnifiedAuth.Models
         public List<ScopeViewModel> IdentityScopes { get; set; }
 
         public List<ScopeViewModel> ApiScopes { get; set; }
-
-        [Required]
-        public string UserDecision { get; set; }
 
         public bool RememberConsent { get; set; }
 
