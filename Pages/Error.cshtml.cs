@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Atomic.UnifiedAuth.Pages
 {
-    public class Error : PageModel
+    public class ErrorPageModel : PageModel
     {
         [BindProperty(SupportsGet = true)]
         public int ErrorCode { get; set; } = 500;

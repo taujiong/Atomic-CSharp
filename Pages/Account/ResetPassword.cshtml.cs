@@ -8,12 +8,12 @@ using Microsoft.Extensions.Localization;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class ResetPassword : AccountPageModel
+    public class ResetPasswordPageModel : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly UserManager<AppUser> _userManager;
 
-        public ResetPassword(
+        public ResetPasswordPageModel(
             UserManager<AppUser> userManager,
             IStringLocalizer<AccountResource> localizer
         )

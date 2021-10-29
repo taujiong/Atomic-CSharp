@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Atomic.UnifiedAuth.Pages
 {
-    public class Index : PageModel
+    public class IndexPageModel : PageModel
     {
         public IActionResult OnGet()
         {

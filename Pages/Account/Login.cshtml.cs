@@ -8,13 +8,13 @@ using Microsoft.Extensions.Localization;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class Login : AccountPageModel
+    public class LoginPageModel : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
 
-        public Login(
+        public LoginPageModel(
             SignInManager<AppUser> signInManager,
             UserManager<AppUser> userManager,
             IStringLocalizer<AccountResource> localizer

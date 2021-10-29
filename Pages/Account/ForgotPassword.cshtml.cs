@@ -8,16 +8,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class ForgotPassword : AccountPageModel
+    public class ForgotPasswordPageModel : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
-        private readonly ILogger<ForgotPassword> _logger;
+        private readonly ILogger<ForgotPasswordPageModel> _logger;
         private readonly UserManager<AppUser> _userManager;
 
-        public ForgotPassword(
+        public ForgotPasswordPageModel(
             UserManager<AppUser> userManager,
             IStringLocalizer<AccountResource> localizer,
-            ILogger<ForgotPassword> logger
+            ILogger<ForgotPasswordPageModel> logger
         )
         {
             _userManager = userManager;

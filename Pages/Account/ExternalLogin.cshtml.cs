@@ -9,15 +9,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class ExternalLogin : AccountPageModel
+    public class ExternalLoginPageModel : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
-        private readonly ILogger<ExternalLogin> _logger;
+        private readonly ILogger<ExternalLoginPageModel> _logger;
         private readonly SignInManager<AppUser> _signInManager;
 
-        public ExternalLogin(
+        public ExternalLoginPageModel(
             SignInManager<AppUser> signInManager,
-            ILogger<ExternalLogin> logger,
+            ILogger<ExternalLoginPageModel> logger,
             IStringLocalizer<AccountResource> localizer
         )
         {

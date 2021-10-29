@@ -2,15 +2,14 @@
 using Atomic.UnifiedAuth.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class Logout : AccountPageModel
+    public class LogoutPageModel : AccountPageModel
     {
         private readonly SignInManager<AppUser> _signInManager;
 
-        public Logout(SignInManager<AppUser> signInManager, ILogger<Logout> logger)
+        public LogoutPageModel(SignInManager<AppUser> signInManager)
         {
             _signInManager = signInManager;
         }

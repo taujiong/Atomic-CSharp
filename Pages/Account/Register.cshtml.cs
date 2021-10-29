@@ -9,16 +9,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Atomic.UnifiedAuth.Pages.Account
 {
-    public class Register : AccountPageModel
+    public class RegisterPageModel : AccountPageModel
     {
         private readonly IStringLocalizer<AccountResource> _localizer;
-        private readonly ILogger<Register> _logger;
+        private readonly ILogger<RegisterPageModel> _logger;
         private readonly UserManager<AppUser> _userManager;
 
-        public Register(
+        public RegisterPageModel(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            ILogger<Register> logger,
+            ILogger<RegisterPageModel> logger,
             IStringLocalizer<AccountResource> localizer
         )
         {

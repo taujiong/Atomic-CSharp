@@ -1,5 +1,5 @@
 ﻿@page
-@model Atomic.UnifiedAuth.Pages.Error
+@model Atomic.UnifiedAuth.Pages.ErrorPageModel
 
 <div class="has-text-centered is-size-2 mb-4">@Model.ErrorCode</div>
 
@@ -12,7 +12,7 @@
 </div>
 
 <div class="has-text-centered">
-  <a asp-page="Index" class="button is-primary">
+  <a asp-page="IndexPageModel" class="button is-primary">
     @_localizer["Go Home"]
   </a>
 </div>
