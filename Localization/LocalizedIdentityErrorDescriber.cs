@@ -35,7 +35,7 @@ namespace Atomic.UnifiedAuth.Localization
             return new IdentityError
             {
                 Code = nameof(InvalidEmail),
-                Description = _localizer["Email '{0}' is invalid.", email]
+                Description = _localizer["Email '{0}' is invalid.", email],
             };
         }
 

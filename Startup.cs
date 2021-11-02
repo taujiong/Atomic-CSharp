@@ -140,16 +140,16 @@ namespace Atomic.UnifiedAuth
             {
                 builder.AddConfigurationStore(options =>
                     {
-                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, builder =>
+                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
                         {
-                            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                            sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
                         });
                     })
                     .AddOperationalStore(options =>
                     {
-                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, builder =>
+                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
                         {
-                            builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                            sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
                         });
                     });
             }

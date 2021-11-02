@@ -2,7 +2,7 @@
 @model Atomic.UnifiedAuth.Pages.Account.LoginPageModel
 
 @{
-  ViewData["Title"] = _localizer["Login"];
+  ViewData["Title"] = _localizer["Login"].Value;
 }
 
 @await Html.PartialAsync("Shared/_ErrorNotification", Model.PageErrorMessage)

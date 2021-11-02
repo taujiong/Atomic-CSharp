@@ -45,9 +45,9 @@ namespace Atomic.UnifiedAuth
                     {
                         "scope1",
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
-                    }
-                }
+                        IdentityServerConstants.StandardScopes.Profile,
+                    },
+                },
             };
     }
 }

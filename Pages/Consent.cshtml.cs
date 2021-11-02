@@ -118,7 +118,7 @@ namespace Atomic.UnifiedAuth.Pages
                 Description = identity.Description,
                 Emphasize = identity.Emphasize,
                 Required = identity.Required,
-                Checked = check || identity.Required
+                Checked = check || identity.Required,
             };
         }
 
@@ -139,7 +139,7 @@ namespace Atomic.UnifiedAuth.Pages
                 Description = apiScope.Description,
                 Emphasize = apiScope.Emphasize,
                 Required = apiScope.Required,
-                Checked = check || apiScope.Required
+                Checked = check || apiScope.Required,
             };
         }
 
@@ -151,7 +151,7 @@ namespace Atomic.UnifiedAuth.Pages
                 DisplayName = "Offline Access",
                 Description = _localizer["Access to your applications and resources, even when you are offline"],
                 Emphasize = true,
-                Checked = check
+                Checked = check,
             };
         }
     }

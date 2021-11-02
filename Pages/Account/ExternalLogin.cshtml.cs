@@ -73,7 +73,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 IsExternal = true,
                 username,
                 emailAddress,
-                ReturnUrl
+                ReturnUrl,
             });
         }
     }
