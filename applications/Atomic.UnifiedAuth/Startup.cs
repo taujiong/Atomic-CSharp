@@ -67,6 +67,7 @@ namespace Atomic.UnifiedAuth
 
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAtomicSecurityHeaders();
 
             app.UseIdentityServer();
             app.UseAuthorization();
