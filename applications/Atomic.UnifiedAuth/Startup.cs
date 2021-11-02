@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Atomic.AspNetCore.Security.Claims;
 using Atomic.UnifiedAuth.Data;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
+using IdentityModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -77,6 +79,8 @@ namespace Atomic.UnifiedAuth
 
         private static void AddLocalization(IServiceCollection services)
         {
+            services.AddAtomicAspNetCore();
+
             services.AddLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
@@ -128,6 +132,16 @@ namespace Atomic.UnifiedAuth
                     options.UserInteraction.ErrorUrl = "/Error";
                 })
                 .AddAspNetIdentity<AppUser>();
+
+            services.Configure<ClaimMapOption>(option =>
+            {
+                option.UserId = JwtClaimTypes.Subject;
+                option.UserName = JwtClaimTypes.PreferredUserName;
+                option.Name = JwtClaimTypes.GivenName;
+                option.SurName = JwtClaimTypes.FamilyName;
+                option.Role = JwtClaimTypes.Role;
+                option.Email = JwtClaimTypes.Email;
+            });
 
             if (Environment.IsDevelopment())
             {

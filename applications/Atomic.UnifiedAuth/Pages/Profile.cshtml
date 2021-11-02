@@ -1,11 +1,13 @@
 ﻿@page
+@using Atomic.AspNetCore.Users
+@inject ICurrentUser _currentUser;
 
 @{
   ViewData["Title"] = _localizer["Profile"].Value;
 }
 
 <div class="block has-text-centered">
-  @User.Identity?.Name
+  @_currentUser.UserName
 </div>
 
 <div class="has-text-centered">
