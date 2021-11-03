@@ -138,8 +138,6 @@ namespace Atomic.UnifiedAuth
             {
                 option.UserId = JwtClaimTypes.Subject;
                 option.UserName = JwtClaimTypes.PreferredUserName;
-                option.Name = JwtClaimTypes.GivenName;
-                option.SurName = JwtClaimTypes.FamilyName;
                 option.Role = JwtClaimTypes.Role;
                 option.Email = JwtClaimTypes.Email;
             });

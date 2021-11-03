@@ -28,10 +28,6 @@ namespace Atomic.AspNetCore.Users
 
         public string? UserName => FindClaim(_claimMap.UserName)?.Value;
 
-        public string? Name => FindClaim(_claimMap.Name)?.Value;
-
-        public string? SurName => FindClaim(_claimMap.SurName)?.Value;
-
         public string? PhoneNumber => FindClaim(_claimMap.PhoneNumber)?.Value;
 
         public bool PhoneNumberVerified => string.Equals(FindClaim(_claimMap.PhoneNumberVerified)?.Value, "true",

@@ -10,10 +10,6 @@ namespace Atomic.AspNetCore.Users
 
         string? UserName { get; }
 
-        string? Name { get; }
-
-        string? SurName { get; }
-
         string? PhoneNumber { get; }
 
         bool PhoneNumberVerified { get; }

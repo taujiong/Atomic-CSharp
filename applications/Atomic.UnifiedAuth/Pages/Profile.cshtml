@@ -10,6 +10,15 @@
   @_currentUser.UserName
 </div>
 
+<div class="content">
+  <ul>
+    @foreach (var claim in _currentUser.GetAllClaims())
+    {
+      <li>@claim.Type: @claim.Value</li>
+    }
+  </ul>
+</div>
+
 <div class="has-text-centered">
   <a asp-page="Account/Logout" class="button is-primary">
     @_localizer["Logout"]
