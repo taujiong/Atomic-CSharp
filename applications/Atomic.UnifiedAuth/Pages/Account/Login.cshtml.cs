@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
+using Atomic.UnifiedAuth.Users;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;

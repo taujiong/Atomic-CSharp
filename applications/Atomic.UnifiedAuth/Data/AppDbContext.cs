@@ -1,4 +1,4 @@
-﻿using Atomic.UnifiedAuth.Models;
+﻿using Atomic.UnifiedAuth.Users;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

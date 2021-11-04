@@ -4,8 +4,9 @@ using System.Globalization;
 using Atomic.AspNetCore.Security.Claims;
 using Atomic.UnifiedAuth.Data;
 using Atomic.UnifiedAuth.Localization;
-using Atomic.UnifiedAuth.Models;
+using Atomic.UnifiedAuth.Users;
 using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -110,6 +111,9 @@ namespace Atomic.UnifiedAuth
                 });
             });
 
+            services.AddScoped<IUserClaimsPrincipalFactory<AppUser>,
+                UserClaimsPrincipalFactory>();
+
             services.AddIdentity<AppUser, IdentityRole>()
                 .AddErrorDescriber<LocalizedIdentityErrorDescriber>()
                 .AddEntityFrameworkStores<AppDbContext>()
@@ -121,6 +125,7 @@ namespace Atomic.UnifiedAuth
                     options.SignInScheme = IdentityConstants.ExternalScheme;
                     options.ClientId = Configuration["ExternalIdentityProviders:GitHub:ClientId"];
                     options.ClientSecret = Configuration["ExternalIdentityProviders:GitHub:ClientSecret"];
+                    options.ClaimActions.MapJsonKey(JwtClaimTypes.Picture, "avatar_url", "url");
                 });
         }
 
@@ -140,6 +145,7 @@ namespace Atomic.UnifiedAuth
                 option.UserName = JwtClaimTypes.PreferredUserName;
                 option.Role = JwtClaimTypes.Role;
                 option.Email = JwtClaimTypes.Email;
+                option.AvatarUrl = JwtClaimTypes.Picture;
             });
 
             if (Environment.IsDevelopment())

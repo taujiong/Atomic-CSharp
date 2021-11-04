@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
+using Atomic.UnifiedAuth.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;

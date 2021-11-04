@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atomic.UnifiedAuth.Models;
+using Atomic.UnifiedAuth.Users;
 using IdentityServer4.Extensions;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Identity;

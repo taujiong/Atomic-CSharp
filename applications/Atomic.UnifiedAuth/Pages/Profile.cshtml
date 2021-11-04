@@ -2,20 +2,17 @@
 @using Atomic.AspNetCore.Users
 @inject ICurrentUser _currentUser;
 
-@{
-  ViewData["Title"] = _localizer["Profile"].Value;
-}
-
-<div class="block has-text-centered">
-  @_currentUser.UserName
+<div class="is-flex is-justify-content-center">
+  <figure class="image is-128x128">
+    <img class="is-rounded" src="@_currentUser.AvatarUrl" alt="avatar">
+  </figure>
 </div>
 
 <div class="content">
   <ul>
-    @foreach (var claim in _currentUser.GetAllClaims())
-    {
-      <li>@claim.Type: @claim.Value</li>
-    }
+    <li>@_localizer["Name"]: @_currentUser.UserName</li>
+    <li>@_localizer["Email"]: @_currentUser.Email</li>
+    <li>@_localizer["Phone"]: @(_currentUser.PhoneNumber ?? "unspecified")</li>
   </ul>
 </div>
 

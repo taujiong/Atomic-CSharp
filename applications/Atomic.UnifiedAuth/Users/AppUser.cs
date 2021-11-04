@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace Atomic.UnifiedAuth.Models
+namespace Atomic.UnifiedAuth.Users
 {
     public class AppUser : IdentityUser
     {
@@ -11,5 +11,8 @@ namespace Atomic.UnifiedAuth.Models
         public AppUser(string userName) : base(userName)
         {
         }
+
+        [PersonalData]
+        public string AvatarUrl { get; set; }
     }
 }

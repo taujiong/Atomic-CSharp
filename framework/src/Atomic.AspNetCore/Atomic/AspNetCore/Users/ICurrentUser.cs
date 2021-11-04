@@ -10,6 +10,8 @@ namespace Atomic.AspNetCore.Users
 
         string? UserName { get; }
 
+        string? AvatarUrl { get; }
+
         string? PhoneNumber { get; }
 
         bool PhoneNumberVerified { get; }

@@ -10,14 +10,9 @@ namespace Atomic.AspNetCore.Security.Claims
         public string UserName { get; set; } = ClaimTypes.Name;
 
         /// <summary>
-        /// Default: <see cref="ClaimTypes.GivenName"/>
+        /// Default: picture.
         /// </summary>
-        public string Name { get; set; } = ClaimTypes.GivenName;
-
-        /// <summary>
-        /// Default: <see cref="ClaimTypes.Surname"/>
-        /// </summary>
-        public string SurName { get; set; } = ClaimTypes.Surname;
+        public string AvatarUrl { get; set; } = "picture";
 
         /// <summary>
         /// Default: <see cref="ClaimTypes.NameIdentifier"/>
