@@ -33,6 +33,8 @@ namespace Atomic.UnifiedAuth
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAtomicAspNetCore();
+
             AddLocalization(services);
 
             AddAuthentication(services);
@@ -81,8 +83,6 @@ namespace Atomic.UnifiedAuth
 
         private static void AddLocalization(IServiceCollection services)
         {
-            services.AddAtomicAspNetCore();
-
             services.AddLocalization();
 
             services.Configure<RequestLocalizationOptions>(options =>
