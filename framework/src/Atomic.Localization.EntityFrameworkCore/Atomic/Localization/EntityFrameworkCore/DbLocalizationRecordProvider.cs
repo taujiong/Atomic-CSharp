@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using Atomic.Localization.Abstraction;
 using Atomic.Utils;
 
-namespace Atomic.SqlLocalization
+namespace Atomic.Localization.EntityFrameworkCore
 {
     public class DbLocalizationRecordProvider : ILocalizationRecordProvider
     {

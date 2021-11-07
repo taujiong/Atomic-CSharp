@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Atomic.SqlLocalization
+namespace Atomic.Localization.EntityFrameworkCore
 {
     public class LocalizationDbContext : DbContext
     {

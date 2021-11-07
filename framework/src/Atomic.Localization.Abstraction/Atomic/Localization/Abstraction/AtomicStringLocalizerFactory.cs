@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using Atomic.Utils;
 using Microsoft.Extensions.Localization;
 
-namespace Atomic.SqlLocalization
+namespace Atomic.Localization.Abstraction
 {
     public class AtomicStringLocalizerFactory : IStringLocalizerFactory
     {

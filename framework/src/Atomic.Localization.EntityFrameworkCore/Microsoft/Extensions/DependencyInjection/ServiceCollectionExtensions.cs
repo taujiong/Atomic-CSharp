@@ -1,6 +1,5 @@
-using Atomic.SqlLocalization;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Localization;
+using Atomic.Localization.Abstraction;
+using Atomic.Localization.EntityFrameworkCore;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -8,7 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static void AddSqlLocalization(this IServiceCollection services)
         {
-            services.TryAddSingleton<IStringLocalizerFactory, AtomicStringLocalizerFactory>();
+            services.AddLocalizationCore();
             services.AddSingleton<ILocalizationRecordProvider, DbLocalizationRecordProvider>();
         }
     }

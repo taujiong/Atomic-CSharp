@@ -19,7 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\framework\src\Atomic.AspNetCore\Atomic.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\framework\src\Atomic.SqlLocalization\Atomic.SqlLocalization.csproj" />
+    <ProjectReference Include="..\..\framework\src\Atomic.Localization.EntityFrameworkCore\Atomic.Localization.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

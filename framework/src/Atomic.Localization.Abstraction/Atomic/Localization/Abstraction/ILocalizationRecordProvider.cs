@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Atomic.SqlLocalization
+namespace Atomic.Localization.Abstraction
 {
     public interface ILocalizationRecordProvider
     {

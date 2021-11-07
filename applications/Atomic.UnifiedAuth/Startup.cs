@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Atomic.AspNetCore.Security.Claims;
-using Atomic.SqlLocalization;
+using Atomic.Localization.EntityFrameworkCore;
 using Atomic.UnifiedAuth.Data;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Users;
