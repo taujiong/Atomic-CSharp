@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomic.AspNetCore", "framew
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomic.Utils", "framework\src\Atomic.Utils\Atomic.Utils.csproj", "{BC54A025-2C78-4DFF-AEAE-0AEFCAA0BCB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomic.SqlLocalization", "framework\src\Atomic.SqlLocalization\Atomic.SqlLocalization.csproj", "{DF8B1079-2C0A-4183-BB22-866143226A43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,7 @@ Global
 		{F7ED0F11-8595-4782-A346-2DA05C1F9439} = {1C2754B6-0CFF-4216-A4BF-549A00F73923}
 		{A272095E-25EE-4952-B4B2-D483C09325D4} = {F7ED0F11-8595-4782-A346-2DA05C1F9439}
 		{BC54A025-2C78-4DFF-AEAE-0AEFCAA0BCB7} = {F7ED0F11-8595-4782-A346-2DA05C1F9439}
+		{DF8B1079-2C0A-4183-BB22-866143226A43} = {F7ED0F11-8595-4782-A346-2DA05C1F9439}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A6F22C61-837F-4A58-858C-262D821525E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -76,5 +79,17 @@ Global
 		{BC54A025-2C78-4DFF-AEAE-0AEFCAA0BCB7}.Release|x64.Build.0 = Release|Any CPU
 		{BC54A025-2C78-4DFF-AEAE-0AEFCAA0BCB7}.Release|x86.ActiveCfg = Release|Any CPU
 		{BC54A025-2C78-4DFF-AEAE-0AEFCAA0BCB7}.Release|x86.Build.0 = Release|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Debug|x64.Build.0 = Debug|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Debug|x86.Build.0 = Debug|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Release|x64.ActiveCfg = Release|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Release|x64.Build.0 = Release|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Release|x86.ActiveCfg = Release|Any CPU
+		{DF8B1079-2C0A-4183-BB22-866143226A43}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
