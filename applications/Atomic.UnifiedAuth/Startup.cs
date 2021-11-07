@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Atomic.AspNetCore.Security.Claims;
+using Atomic.SqlLocalization;
 using Atomic.UnifiedAuth.Data;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Users;
@@ -81,9 +82,18 @@ namespace Atomic.UnifiedAuth
             });
         }
 
-        private static void AddLocalization(IServiceCollection services)
+        private void AddLocalization(IServiceCollection services)
         {
-            services.AddLocalization();
+            services.AddSqlLocalization();
+
+            services.AddDbContext<LocalizationDbContext>(options =>
+            {
+                var connectionString = Configuration.GetConnectionString("Localization");
+                options.UseNpgsql(connectionString, builder =>
+                {
+                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                });
+            }, ServiceLifetime.Singleton, ServiceLifetime.Singleton);
 
             services.Configure<RequestLocalizationOptions>(options =>
             {
