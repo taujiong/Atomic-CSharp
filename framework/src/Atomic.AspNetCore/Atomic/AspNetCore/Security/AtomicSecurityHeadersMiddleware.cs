@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 
 namespace Atomic.AspNetCore.Security
 {
@@ -38,7 +37,7 @@ namespace Atomic.AspNetCore.Security
 
         private static void AddHeaderIfNotExists(HttpContext context, string key, string value)
         {
-            context.Response.Headers.AddIfNotContains(new KeyValuePair<string, StringValues>(key, value));
+            context.Response.Headers.TryAdd(key, value);
         }
     }
 }
