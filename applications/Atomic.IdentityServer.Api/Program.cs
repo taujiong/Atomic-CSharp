@@ -1,5 +1,9 @@
 using System;
+using Atomic.IdentityServer.Api.Data;
+using IdentityServer4.EntityFramework.DbContexts;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
@@ -19,6 +23,8 @@ namespace Atomic.IdentityServer.Api
             {
                 Log.Information("Configuring web host ({AppName})...", appName);
                 var host = CreateHostBuilder(args).Build();
+
+                CreateDbIfNotExists(host);
 
                 Log.Information("Starting web host ({AppName})...", appName);
                 host.Run();
@@ -59,5 +65,14 @@ namespace Atomic.IdentityServer.Api
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static void CreateDbIfNotExists(IHost host)
+        {
+            using var scope = host.Services.CreateScope();
+            var services = scope.ServiceProvider;
+            var context = services.GetRequiredService<ConfigurationDbContext>();
+            var configuration = services.GetRequiredService<IConfiguration>();
+            DataSeeder.SeedData(context, configuration);
+        }
     }
 }
