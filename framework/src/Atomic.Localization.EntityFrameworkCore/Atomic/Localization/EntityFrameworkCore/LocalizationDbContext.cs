@@ -4,7 +4,7 @@ namespace Atomic.Localization.EntityFrameworkCore
 {
     public class LocalizationDbContext : DbContext
     {
-        public LocalizationDbContext(DbContextOptions options) : base(options)
+        public LocalizationDbContext(DbContextOptions<LocalizationDbContext> options) : base(options)
         {
         }
 

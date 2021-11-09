@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Atomic.Localization.Api.Models;
+using Atomic.IdentityServer.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atomic.Localization.Api.Controllers
+namespace Atomic.IdentityServer.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

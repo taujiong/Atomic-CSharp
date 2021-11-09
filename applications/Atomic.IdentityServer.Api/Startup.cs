@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Atomic.AspNetCore.Security.Claims;
-using Atomic.Localization.Api.Data;
-using Atomic.Localization.Api.Localization;
+using Atomic.IdentityServer.Api.Localization;
 using Atomic.Localization.EntityFrameworkCore;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,7 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
-namespace Atomic.Localization.Api
+namespace Atomic.IdentityServer.Api
 {
     public class Startup
     {
@@ -32,22 +31,22 @@ namespace Atomic.Localization.Api
         {
             services.AddAtomicAspNetCore();
 
-            AddDatabase(services);
-
             AddLocalization(services);
 
             AddAuthentication(services);
+
+            AddIdentityServer(services);
 
             services.AddControllers()
                 .AddDataAnnotationsLocalization(options =>
                 {
                     options.DataAnnotationLocalizerProvider = (_, factory) =>
-                        factory.Create(typeof(LocalizationResource));
+                        factory.Create(typeof(IdentityServerResource));
                 });
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atomic.Localization.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Atomic.IdentityServer.Api", Version = "v1" });
             });
         }
 
@@ -75,18 +74,6 @@ namespace Atomic.Localization.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-        }
-
-        private void AddDatabase(IServiceCollection services)
-        {
-            services.AddDbContext<AppDbContext>(options =>
-            {
-                var connectionString = Configuration.GetConnectionString("Localization");
-                options.UseNpgsql(connectionString, builder =>
-                {
-                    builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
-                });
             });
         }
 
@@ -136,6 +123,28 @@ namespace Atomic.Localization.Api
                 option.Email = JwtClaimTypes.Email;
                 option.AvatarUrl = JwtClaimTypes.Picture;
             });
+        }
+
+        private void AddIdentityServer(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("IdentityServer");
+            services.AddIdentityServer()
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                        sqlOptions.MigrationsAssembly(typeof(Startup).Assembly.GetName().FullName);
+                    });
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                        sqlOptions.MigrationsAssembly(typeof(Startup).Assembly.GetName().FullName);
+                    });
+                });
         }
     }
 }

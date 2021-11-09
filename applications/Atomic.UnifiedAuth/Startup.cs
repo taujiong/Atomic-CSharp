@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Security.Cryptography.X509Certificates;
 using Atomic.AspNetCore.Security.Claims;
 using Atomic.Localization.EntityFrameworkCore;
 using Atomic.UnifiedAuth.Data;
@@ -141,14 +142,6 @@ namespace Atomic.UnifiedAuth
 
         private void AddIdentityServer(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("IdentityServer");
-            var builder = services.AddIdentityServer(options =>
-                {
-                    options.IssuerUri = Configuration["AuthServer:IssuerUri"];
-                    options.UserInteraction.ErrorUrl = "/Error";
-                })
-                .AddAspNetIdentity<AppUser>();
-
             services.Configure<ClaimMapOption>(option =>
             {
                 option.UserId = JwtClaimTypes.Subject;
@@ -158,29 +151,39 @@ namespace Atomic.UnifiedAuth
                 option.AvatarUrl = JwtClaimTypes.Picture;
             });
 
+            var builder = services.AddIdentityServer(options =>
+                {
+                    options.IssuerUri = Configuration["AuthServer:IssuerUri"];
+                    options.UserInteraction.ErrorUrl = "/Error";
+                })
+                .AddAspNetIdentity<AppUser>();
+
+            var connectionString = Configuration.GetConnectionString("IdentityServer");
+            builder.AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                    });
+                })
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
+                    {
+                        sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
+                    });
+                });
+
             if (Environment.IsDevelopment())
             {
-                builder.AddInMemoryClients(IdentityServerConfig.Clients)
-                    .AddInMemoryApiScopes(IdentityServerConfig.ApiScopes)
-                    .AddInMemoryIdentityResources(IdentityServerConfig.IdentityResources)
-                    .AddDeveloperSigningCredential();
+                builder.AddDeveloperSigningCredential();
             }
             else
             {
-                builder.AddConfigurationStore(options =>
-                    {
-                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
-                        });
-                    })
-                    .AddOperationalStore(options =>
-                    {
-                        options.ConfigureDbContext = b => b.UseNpgsql(connectionString, sqlOptions =>
-                        {
-                            sqlOptions.EnableRetryOnFailure(5, TimeSpan.FromSeconds(15), null);
-                        });
-                    });
+                builder.AddSigningCredential(new X509Certificate2(
+                    Configuration["AuthServer:CertPath"],
+                    Configuration["AuthServer:CertPassword"]
+                ));
             }
         }
     }

@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomic.Localization.EntityF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomic.Localization.Api", "applications\Atomic.Localization.Api\Atomic.Localization.Api.csproj", "{E60E618F-26D4-4CE3-9B61-1635AD011F69}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atomic.IdentityServer.Api", "applications\Atomic.IdentityServer.Api\Atomic.IdentityServer.Api.csproj", "{5EB9F46E-91FC-4587-A8C6-9E1597E95518}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,7 @@ Global
 		{DF8B1079-2C0A-4183-BB22-866143226A43} = {F7ED0F11-8595-4782-A346-2DA05C1F9439}
 		{F94A6584-643B-40FD-8E08-8300090FB6F8} = {F7ED0F11-8595-4782-A346-2DA05C1F9439}
 		{E60E618F-26D4-4CE3-9B61-1635AD011F69} = {637EEB8A-3665-476F-A49F-34E7BA233DFC}
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518} = {637EEB8A-3665-476F-A49F-34E7BA233DFC}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{A6F22C61-837F-4A58-858C-262D821525E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -121,5 +124,17 @@ Global
 		{E60E618F-26D4-4CE3-9B61-1635AD011F69}.Release|x64.Build.0 = Release|Any CPU
 		{E60E618F-26D4-4CE3-9B61-1635AD011F69}.Release|x86.ActiveCfg = Release|Any CPU
 		{E60E618F-26D4-4CE3-9B61-1635AD011F69}.Release|x86.Build.0 = Release|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Debug|x64.Build.0 = Debug|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Debug|x86.Build.0 = Debug|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Release|x64.ActiveCfg = Release|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Release|x64.Build.0 = Release|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Release|x86.ActiveCfg = Release|Any CPU
+		{5EB9F46E-91FC-4587-A8C6-9E1597E95518}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
