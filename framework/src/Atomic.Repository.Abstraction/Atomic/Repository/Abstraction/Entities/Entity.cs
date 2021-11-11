@@ -24,17 +24,13 @@ namespace Atomic.Repository.Abstraction.Entities
     [Serializable]
     public abstract class Entity<TKey> : Entity, IEntity<TKey>
     {
-        protected Entity()
-        {
-        }
-
         protected Entity(TKey id)
         {
             Id = id;
         }
 
         /// <inheritdoc/>
-        public virtual TKey Id { get; protected set; }
+        public TKey Id { get; protected set; }
 
         public override object[] GetKeys()
         {

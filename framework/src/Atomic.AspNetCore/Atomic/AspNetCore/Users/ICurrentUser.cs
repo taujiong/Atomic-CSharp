@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using JetBrains.Annotations;
 
 namespace Atomic.AspNetCore.Users
 {
@@ -6,23 +7,29 @@ namespace Atomic.AspNetCore.Users
     {
         bool IsAuthenticated { get; }
 
-        string? Id { get; }
+        [CanBeNull]
+        string Id { get; }
 
-        string? UserName { get; }
+        [CanBeNull]
+        string UserName { get; }
 
-        string? AvatarUrl { get; }
+        [CanBeNull]
+        string AvatarUrl { get; }
 
-        string? PhoneNumber { get; }
+        [CanBeNull]
+        string PhoneNumber { get; }
 
         bool PhoneNumberVerified { get; }
 
-        string? Email { get; }
+        [CanBeNull]
+        string Email { get; }
 
         bool EmailVerified { get; }
 
         string[] Roles { get; }
 
-        Claim? FindClaim(string claimType);
+        [CanBeNull]
+        Claim FindClaim(string claimType);
 
         Claim[] FindClaims(string claimType);
 

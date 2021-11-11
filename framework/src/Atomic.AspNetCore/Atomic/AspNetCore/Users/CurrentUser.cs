@@ -24,25 +24,27 @@ namespace Atomic.AspNetCore.Users
         }
 
         public bool IsAuthenticated => !string.IsNullOrEmpty(Id);
-        public string? Id => FindClaim(_claimMap.UserId)?.Value;
 
-        public string? UserName => FindClaim(_claimMap.UserName)?.Value;
+        public string Id => FindClaim(_claimMap.UserId)?.Value;
 
-        public string? AvatarUrl => FindClaim(_claimMap.AvatarUrl)?.Value;
 
-        public string? PhoneNumber => FindClaim(_claimMap.PhoneNumber)?.Value;
+        public string UserName => FindClaim(_claimMap.UserName)?.Value;
+
+        public string AvatarUrl => FindClaim(_claimMap.AvatarUrl)?.Value;
+
+        public string PhoneNumber => FindClaim(_claimMap.PhoneNumber)?.Value;
 
         public bool PhoneNumberVerified => string.Equals(FindClaim(_claimMap.PhoneNumberVerified)?.Value, "true",
             StringComparison.InvariantCulture);
 
-        public string? Email => FindClaim(_claimMap.Email)?.Value;
+        public string Email => FindClaim(_claimMap.Email)?.Value;
 
         public bool EmailVerified => string.Equals(FindClaim(_claimMap.EmailVerified)?.Value, "true",
             StringComparison.InvariantCulture);
 
         public string[] Roles => FindClaims(_claimMap.Role).Select(c => c.Value).Distinct().ToArray();
 
-        public Claim? FindClaim(string claimType)
+        public Claim FindClaim(string claimType)
         {
             return _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(c => c.Type == claimType);
         }

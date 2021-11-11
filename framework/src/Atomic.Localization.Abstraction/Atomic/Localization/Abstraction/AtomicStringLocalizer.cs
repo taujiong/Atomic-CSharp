@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using Atomic.Utils;
+using JetBrains.Annotations;
 using Microsoft.Extensions.Localization;
 
 namespace Atomic.Localization.Abstraction
@@ -11,7 +12,7 @@ namespace Atomic.Localization.Abstraction
     {
         private readonly Dictionary<string, string> _localizationRecords;
 
-        private readonly ConcurrentDictionary<string, object?> _missingResourceKey;
+        private readonly ConcurrentDictionary<string, object> _missingResourceKey;
 
         private readonly string _resourceKey;
 
@@ -19,7 +20,7 @@ namespace Atomic.Localization.Abstraction
         {
             _localizationRecords = localizationRecords;
             _resourceKey = resourceKey;
-            _missingResourceKey = new ConcurrentDictionary<string, object?>();
+            _missingResourceKey = new ConcurrentDictionary<string, object>();
         }
 
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures) =>
@@ -46,7 +47,8 @@ namespace Atomic.Localization.Abstraction
             }
         }
 
-        private string? GetStringSafely(string key, CultureInfo? culture)
+        [CanBeNull]
+        private string GetStringSafely(string key, [CanBeNull] CultureInfo culture)
         {
             Check.NotNull(key, nameof(key));
             culture ??= CultureInfo.CurrentCulture;

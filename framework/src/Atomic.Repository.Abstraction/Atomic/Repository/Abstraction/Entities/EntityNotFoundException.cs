@@ -14,23 +14,7 @@ namespace Atomic.Repository.Abstraction.Entities
         /// <summary>
         /// Creates a new <see cref="EntityNotFoundException"/> object.
         /// </summary>
-        public EntityNotFoundException(Type entityType)
-            : this(entityType, null, null)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="EntityNotFoundException"/> object.
-        /// </summary>
-        public EntityNotFoundException(Type entityType, object id)
-            : this(entityType, id, null)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new <see cref="EntityNotFoundException"/> object.
-        /// </summary>
-        public EntityNotFoundException(Type entityType, object id, Exception innerException)
+        public EntityNotFoundException(Type entityType, object id = null, Exception innerException = null)
             : base(
                 id == null
                     ? $"There is no such an entity given id. Entity type: {entityType.FullName}"
@@ -63,11 +47,11 @@ namespace Atomic.Repository.Abstraction.Entities
         /// <summary>
         /// Type of the entity.
         /// </summary>
-        public Type EntityType { get; set; }
+        public Type EntityType { get; }
 
         /// <summary>
         /// Id of the Entity.
         /// </summary>
-        public object Id { get; set; }
+        public object Id { get; }
     }
 }
