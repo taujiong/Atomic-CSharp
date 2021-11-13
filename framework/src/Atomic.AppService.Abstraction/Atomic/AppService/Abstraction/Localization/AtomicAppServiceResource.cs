@@ -1,4 +1,4 @@
-namespace Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Localization
+namespace Atomic.AppService.Abstraction.Localization
 {
     public class AtomicAppServiceResource
     {

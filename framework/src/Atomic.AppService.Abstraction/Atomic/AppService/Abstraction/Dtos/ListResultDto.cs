@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Dtos
+namespace Atomic.AppService.Abstraction.Dtos
 {
     [Serializable]
     public class ListResultDto<T>

@@ -6,67 +6,9 @@ using JetBrains.Annotations;
 
 namespace Atomic.Repository.Abstraction.Repositories
 {
-    public interface IBasicRepository<TEntity> : IReadOnlyBasicRepository<TEntity>
+    public interface IDeleteRepository<in TEntity>
         where TEntity : class, IEntity
     {
-        /// <summary>
-        /// Inserts a new entity.
-        /// </summary>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
-        /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        /// <param name="entity">Inserted entity</param>
-        Task<TEntity> InsertAsync(TEntity entity, bool autoSave = false, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Inserts multiple new entities.
-        /// </summary>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
-        /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        /// <param name="entities">Entities to be inserted.</param>
-        /// <returns>Awaitable <see cref="Task"/>.</returns>
-        Task InsertManyAsync(
-            [NotNull] IEnumerable<TEntity> entities,
-            bool autoSave = false,
-            CancellationToken cancellationToken = default
-        );
-
-        /// <summary>
-        /// Updates an existing entity.
-        /// </summary>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
-        /// </param>
-        /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        /// <param name="entity">Entity</param>
-        [NotNull]
-        Task<TEntity> UpdateAsync(
-            [NotNull] TEntity entity,
-            bool autoSave = false,
-            CancellationToken cancellationToken = default
-        );
-
-        /// <summary>
-        /// Updates multiple entities.
-        /// </summary>
-        /// <param name="entities">Entities to be updated.</param>
-        /// <param name="autoSave">
-        /// Set true to automatically save changes to database.
-        /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.</param>
-        /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        /// <returns>Awaitable <see cref="Task"/>.</returns>
-        Task UpdateManyAsync(
-            [NotNull] IEnumerable<TEntity> entities,
-            bool autoSave = false,
-            CancellationToken cancellationToken = default
-        );
-
         /// <summary>
         /// Deletes an entity.
         /// </summary>
@@ -99,8 +41,7 @@ namespace Atomic.Repository.Abstraction.Repositories
         );
     }
 
-    public interface IBasicRepository<TEntity, in TKey> : IBasicRepository<TEntity>,
-        IReadOnlyBasicRepository<TEntity, TKey>
+    public interface IDeleteRepository<in TEntity, in TKey> : IDeleteRepository<TEntity>
         where TEntity : class, IEntity<TKey>
     {
         /// <summary>
@@ -112,11 +53,11 @@ namespace Atomic.Repository.Abstraction.Repositories
         /// This is useful for ORMs / database APIs those only save changes with an explicit method call, but you need to immediately save changes to the database.
         /// </param>
         /// <param name="cancellationToken">A <see cref="T:System.Threading.CancellationToken" /> to observe while waiting for the task to complete.</param>
-        Task DeleteAsync(
+        Task<bool> DeleteAsync(
             TKey id,
             bool autoSave = false,
             CancellationToken cancellationToken = default
-        ); //TODO: Return true if deleted
+        );
 
         /// <summary>
         /// Deletes multiple entities by primary keys.

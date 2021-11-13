@@ -1,6 +1,6 @@
-using Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Dtos;
+using Atomic.AppService.Abstraction.Dtos;
 
-namespace Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Services
+namespace Atomic.AppService.Abstraction.Services
 {
     public interface ICrudAppService<TEntityDto, in TKey>
         : ICrudAppService<TEntityDto, TKey, PagedAndSortedResultRequestDto>

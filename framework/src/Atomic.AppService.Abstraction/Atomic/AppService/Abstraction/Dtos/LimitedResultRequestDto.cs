@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Localization;
+using Atomic.AppService.Abstraction.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 
-namespace Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Dtos
+namespace Atomic.AppService.Abstraction.Dtos
 {
     [Serializable]
     public class LimitedResultRequestDto : IValidatableObject

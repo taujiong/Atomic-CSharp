@@ -1,6 +1,6 @@
 using System;
 
-namespace Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Dtos
+namespace Atomic.AppService.Abstraction.Dtos
 {
     [Serializable]
     public abstract class EntityDto<TKey>

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Dtos;
+using Atomic.AppService.Abstraction.Dtos;
 
-namespace Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Services
+namespace Atomic.AppService.Abstraction.Services
 {
     public interface IReadOnlyAppService<TEntityDto, in TKey>
         : IReadOnlyAppService<TEntityDto, TEntityDto, TKey, PagedAndSortedResultRequestDto>

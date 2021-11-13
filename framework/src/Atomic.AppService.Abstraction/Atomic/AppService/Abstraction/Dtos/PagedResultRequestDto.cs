@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atomic.AppService.Abstraction.Atomic.AppService.Abstraction.Dtos
+namespace Atomic.AppService.Abstraction.Dtos
 {
     [Serializable]
     public class PagedResultRequestDto : LimitedResultRequestDto
