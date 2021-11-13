@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atomic.ExceptionHandling;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using IdentityServer4;
@@ -77,7 +77,7 @@ namespace Atomic.UnifiedAuth.Pages
             if (context == null)
             {
                 _logger.LogWarning("No consent request matching request: {0}", ReturnUrl);
-                throw new Exception(_localizer["Invalid login request from third-party client."]);
+                throw new AtomicException(_localizer["Invalid login request from third-party client."]);
             }
 
             return context;

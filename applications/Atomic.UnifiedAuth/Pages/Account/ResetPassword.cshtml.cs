@@ -1,6 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using Atomic.ExceptionHandling;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using Atomic.UnifiedAuth.Users;
@@ -32,7 +32,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
         public IActionResult OnGet(string code, string userId)
         {
             if (string.IsNullOrEmpty(code) || string.IsNullOrEmpty(userId))
-                throw new Exception(_localizer["Wrong password reset link."]);
+                throw new AtomicException(_localizer["Wrong password reset link."]);
 
             Input = new ResetPasswordModel
             {

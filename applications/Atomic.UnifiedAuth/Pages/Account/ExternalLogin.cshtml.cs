@@ -1,6 +1,6 @@
-﻿using System;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
+using Atomic.ExceptionHandling;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Users;
 using Microsoft.AspNetCore.Identity;
@@ -40,7 +40,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             if (remoteError != null)
             {
                 _logger.LogWarning("External login failed: {error}", remoteError);
-                throw new Exception(remoteError);
+                throw new AtomicException(remoteError);
             }
 
             var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
@@ -48,7 +48,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
             {
                 const string message = "Error loading external login information";
                 _logger.LogWarning(message);
-                throw new Exception(_localizer[message]);
+                throw new AtomicException(_localizer[message]);
             }
 
             var username = loginInfo.Principal.FindFirstValue(ClaimTypes.Name);
@@ -62,10 +62,10 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 return RedirectSafely();
 
             if (result.IsLockedOut)
-                throw new Exception(_localizer["The user is locked out, re-try in 5 minutes"]);
+                throw new AtomicException(_localizer["The user is locked out, re-try in 5 minutes"]);
 
             if (result.IsNotAllowed)
-                throw new Exception(_localizer["The user is not allowed to log in"]);
+                throw new AtomicException(_localizer["The user is not allowed to log in"]);
 
             // If the user does not have an account, then redirect to register page.
             return RedirectToPage("./Register", new

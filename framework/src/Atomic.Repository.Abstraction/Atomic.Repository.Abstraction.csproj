@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Atomic.ExceptionHandling\Atomic.ExceptionHandling.csproj" />
     <ProjectReference Include="..\Atomic.Utils\Atomic.Utils.csproj" />
   </ItemGroup>
 

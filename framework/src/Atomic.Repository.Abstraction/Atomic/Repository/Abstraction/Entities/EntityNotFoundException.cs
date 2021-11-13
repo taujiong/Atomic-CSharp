@@ -1,8 +1,9 @@
 using System;
+using Atomic.ExceptionHandling;
 
 namespace Atomic.Repository.Abstraction.Entities
 {
-    public class EntityNotFoundException : Exception
+    public class EntityNotFoundException : AtomicException
     {
         /// <summary>
         /// Creates a new <see cref="EntityNotFoundException"/> object.

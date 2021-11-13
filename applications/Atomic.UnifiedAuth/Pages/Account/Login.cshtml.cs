@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Atomic.ExceptionHandling;
 using Atomic.UnifiedAuth.Localization;
 using Atomic.UnifiedAuth.Models;
 using Atomic.UnifiedAuth.Users;
@@ -65,7 +65,7 @@ namespace Atomic.UnifiedAuth.Pages.Account
                 if (context != null || Url.IsLocalUrl(ReturnUrl) || string.IsNullOrEmpty(ReturnUrl))
                     return RedirectSafely();
 
-                throw new Exception(_localizer["Invalid return url."]);
+                throw new AtomicException(_localizer["Invalid return url."]);
             }
 
             // TODO: add 2fa logic
